@@ -10,68 +10,68 @@
                     {
                         "name": "2.5(1) V  max",
                         "bytes": "01",
-                        "type": "uint16",
-                        "default": 6553
+                        "type": "float",
+                        "default": 0
                     },
                     {
                         "name": "2.5(2) V  max",
                         "bytes": "02",
-                        "type": "uint16",
-                        "default": 6553
+                        "type": "float",
+                        "default": 0
                     },
                     {
                         "name": "3.3 V МЦО max",
                         "bytes": "03",
-                        "type": "uint16",
-                        "default": 6553
+                        "type": "float",
+                        "default": 0
                     },
                     {
                         "name": "1.25 V max",
                         "bytes": "05",
-                        "type": "uint16",
-                        "default": 6553
+                        "type": "float",
+                        "default": 0
                     },
                     {
                         "name": "3.3V max",
                         "bytes": "06",
-                        "type": "uint16",
-                        "default": 6553
+                        "type": "float",
+                        "default": 0
                     },
                     {
                         "name": "9 V max",
                         "bytes": "07",
-                        "type": "uint16",
-                        "default": 6553
+                        "type": "float",
+                        "default": 0
                     },
                     {
                         "name": "5 V max",
                         "bytes": "08",
-                        "type": "uint16",
-                        "default": 6553
+                        "type": "float",
+                        "default": 0
                     },
                     {
                         "name": "12 V max ",
                         "bytes": "09",
-                        "type": "uint16",
-                        "default": 6553
+                        "type": "float",
+                        "default": 0
                     },
                     {
                         "name": "-12 V max ",
                         "bytes": "0A",
-                        "type": "uint16",
-                        "default": 6553
+                        "type": "float",
+                        "default": 0
                     },
                     {
                         "name": "15 V max",
                         "bytes": "0B",
-                        "type": "uint16",
-                        "default": 6553
+                        "type": "float",
+                        "default": 0
                     },
                     {
                         "name": "-15 V max",
                         "bytes": "0C",
-                        "type": "uint16",
-                        "default": 6553
+                        "type": "float",
+                        "default": 0
                     }
                 ]
             },
@@ -82,68 +82,68 @@
                     {
                         "name": "2.5(1) V  max",
                         "bytes": "01",
-                        "type": "uint16",
-                        "default": 6553
+                        "type": "float",
+                        "default": 0
                     },
                     {
                         "name": "2.5(2) V  max",
                         "bytes": "02",
-                        "type": "uint16",
-                        "default": 6553
+                        "type": "float",
+                        "default": 0
                     },
                     {
                         "name": "3.3 V МЦО max",
                         "bytes": "03",
-                        "type": "uint16",
-                        "default": 6553
+                        "type": "float",
+                        "default": 0
                     },
                     {
                         "name": "1.25 V max",
                         "bytes": "05",
-                        "type": "uint16",
-                        "default": 6553
+                        "type": "float",
+                        "default": 0
                     },
                     {
                         "name": "3.3V max",
                         "bytes": "06",
-                        "type": "uint16",
-                        "default": 6553
+                        "type": "float",
+                        "default": 0
                     },
                     {
                         "name": "9 V max",
                         "bytes": "07",
-                        "type": "uint16",
-                        "default": 6553
+                        "type": "float",
+                        "default": 0
                     },
                     {
                         "name": "5 V max",
                         "bytes": "08",
-                        "type": "uint16",
-                        "default": 6553
+                        "type": "float",
+                        "default": 0
                     },
                     {
                         "name": "12 V max ",
                         "bytes": "09",
-                        "type": "uint16",
-                        "default": 6553
+                        "type": "float",
+                        "default": 0
                     },
                     {
                         "name": "-12 V max ",
                         "bytes": "0A",
-                        "type": "uint16",
-                        "default": 6553
+                        "type": "float",
+                        "default": 0
                     },
                     {
                         "name": "15 V max",
                         "bytes": "0B",
-                        "type": "uint16",
-                        "default": 6553
+                        "type": "float",
+                        "default": 0
                     },
                     {
                         "name": "-15 V max",
                         "bytes": "0C",
-                        "type": "uint16",
-                        "default": 6553
+                        "type": "float",
+                        "default": 0
                     }
                 ]
             },
@@ -154,68 +154,68 @@
                     {
                         "name": "2.5(1) V  max",
                         "bytes": "01",
-                        "type": "uint16",
-                        "default": 6553
+                        "type": "float",
+                        "default": 0
                     },
                     {
                         "name": "2.5(2) V  max",
                         "bytes": "02",
-                        "type": "uint16",
-                        "default": 6553
+                        "type": "float",
+                        "default": 0
                     },
                     {
                         "name": "3.3 V МЦО max",
                         "bytes": "03",
-                        "type": "uint16",
-                        "default": 6553
+                        "type": "float",
+                        "default": 0
                     },
                     {
                         "name": "1.25 V max",
                         "bytes": "05",
-                        "type": "uint16",
-                        "default": 6553
+                        "type": "float",
+                        "default": 0
                     },
                     {
                         "name": "3.3V max",
                         "bytes": "06",
-                        "type": "uint16",
-                        "default": 6553
+                        "type": "float",
+                        "default": 0
                     },
                     {
                         "name": "9 V max",
                         "bytes": "07",
-                        "type": "uint16",
-                        "default": 6553
+                        "type": "float",
+                        "default": 0
                     },
                     {
                         "name": "5 V max",
                         "bytes": "08",
-                        "type": "uint16",
-                        "default": 6553
+                        "type": "float",
+                        "default": 0
                     },
                     {
                         "name": "12 V max ",
                         "bytes": "09",
-                        "type": "uint16",
-                        "default": 6553
+                        "type": "float",
+                        "default": 0
                     },
                     {
                         "name": "-12 V max ",
                         "bytes": "0A",
-                        "type": "uint16",
-                        "default": 6553
+                        "type": "float",
+                        "default": 0
                     },
                     {
                         "name": "15 V max",
                         "bytes": "0B",
-                        "type": "uint16",
-                        "default": 6553
+                        "type": "float",
+                        "default": 0
                     },
                     {
                         "name": "-15 V max",
                         "bytes": "0C",
-                        "type": "uint16",
-                        "default": 6553
+                        "type": "float",
+                        "default": 0
                     }
                 ]
             }
@@ -232,68 +232,68 @@
                     {
                         "name": "2.5(1) V  max",
                         "bytes": "01",
-                        "type": "uint16",
-                        "default": 6553
+                        "type": "float",
+                        "default": 2.72
                     },
                     {
                         "name": "2.5(2) V  max",
                         "bytes": "02",
-                        "type": "uint16",
-                        "default": 6553
+                        "type": "float",
+                        "default": 2.61
                     },
                     {
                         "name": "3.3 V МЦО max",
                         "bytes": "03",
-                        "type": "uint16",
-                        "default": 6553
+                        "type": "float",
+                        "default": 2.18
                     },
                     {
                         "name": "1.25 V max",
                         "bytes": "05",
-                        "type": "uint16",
-                        "default": 6553
+                        "type": "float",
+                        "default": 1.33
                     },
                     {
                         "name": "3.3V max",
                         "bytes": "06",
-                        "type": "uint16",
-                        "default": 6553
+                        "type": "float",
+                        "default": 2.17
                     },
                     {
                         "name": "9 V max",
                         "bytes": "07",
-                        "type": "uint16",
-                        "default": 6553
+                        "type": "float",
+                        "default": 2.11
                     },
                     {
                         "name": "5 V max",
                         "bytes": "08",
-                        "type": "uint16",
-                        "default": 6553
+                        "type": "float",
+                        "default": 2.02
                     },
                     {
                         "name": "12 V max ",
                         "bytes": "09",
-                        "type": "uint16",
-                        "default": 6553
+                        "type": "float",
+                        "default": 2.11
                     },
                     {
                         "name": "-12 V max ",
                         "bytes": "0A",
-                        "type": "uint16",
-                        "default": 6553
+                        "type": "float",
+                        "default": 2.11
                     },
                     {
                         "name": "15 V max",
                         "bytes": "0B",
-                        "type": "uint16",
-                        "default": 6553
+                        "type": "float",
+                        "default": 2.15
                     },
                     {
                         "name": "-15 V max",
                         "bytes": "0C",
-                        "type": "uint16",
-                        "default": 6553
+                        "type": "float",
+                        "default": 2.17
                     }
                 ]
             },
@@ -304,68 +304,68 @@
                     {
                         "name": "2.5(1) V  max",
                         "bytes": "01",
-                        "type": "uint16",
-                        "default": 6553
+                        "type": "float",
+                        "default": 2.22
                     },
                     {
                         "name": "2.5(2) V  max",
                         "bytes": "02",
-                        "type": "uint16",
-                        "default": 6553
+                        "type": "float",
+                        "default": 2.14
                     },
                     {
                         "name": "3.3 V МЦО max",
                         "bytes": "03",
-                        "type": "uint16",
-                        "default": 6553
+                        "type": "float",
+                        "default": 1.78
                     },
                     {
                         "name": "1.25 V max",
                         "bytes": "05",
-                        "type": "uint16",
-                        "default": 6553
+                        "type": "float",
+                        "default": 1.09
                     },
                     {
                         "name": "3.3V max",
                         "bytes": "06",
-                        "type": "uint16",
-                        "default": 6553
+                        "type": "float",
+                        "default": 1.78
                     },
                     {
                         "name": "9 V max",
                         "bytes": "07",
-                        "type": "uint16",
-                        "default": 6553
+                        "type": "float",
+                        "default": 1.73
                     },
                     {
                         "name": "5 V max",
                         "bytes": "08",
-                        "type": "uint16",
-                        "default": 6553
+                        "type": "float",
+                        "default": 1.65
                     },
                     {
                         "name": "12 V max ",
                         "bytes": "09",
-                        "type": "uint16",
-                        "default": 6553
+                        "type": "float",
+                        "default": 1.73
                     },
                     {
                         "name": "-12 V max ",
                         "bytes": "0A",
-                        "type": "uint16",
-                        "default": 6553
+                        "type": "float",
+                        "default": 1.72
                     },
                     {
                         "name": "15 V max",
                         "bytes": "0B",
-                        "type": "uint16",
-                        "default": 6553
+                        "type": "float",
+                        "default": 1.75
                     },
                     {
                         "name": "-15 V max",
                         "bytes": "0C",
-                        "type": "uint16",
-                        "default": 6553
+                        "type": "float",
+                        "default": 1.78
                     }
                 ]
             }
@@ -382,8 +382,8 @@
                     {
                         "name": "Версия ПМО",
                         "bytes": "01",
-                        "type": "uint16",
-                        "default": 6553
+                        "type": "float",
+                        "default": 0
                     },
                     {
                         "name": "Дата ПМО",
@@ -394,56 +394,56 @@
                     {
                         "name": "КС ПМО 1",
                         "bytes": "03",
-                        "type": "uint16",
-                        "default": 6553
+                        "type": "float",
+                        "default": 0
                     },
                     {
                         "name": "КС ПМО 2",
                         "bytes": "04",
-                        "type": "uint16",
-                        "default": 6553
+                        "type": "float",
+                        "default": 0
                     },
                     {
                         "name": "КС ПМО 3",
                         "bytes": "05",
-                        "type": "uint16",
-                        "default": 6553
+                        "type": "float",
+                        "default": 0
                     },
                     {
                         "name": "КС ПМО 4",
                         "bytes": "06",
-                        "type": "uint16",
-                        "default": 6553
+                        "type": "float",
+                        "default": 0
                     },
                     {
                         "name": "КС ПМО 5",
                         "bytes": "07",
-                        "type": "uint16",
-                        "default": 6553
+                        "type": "float",
+                        "default": 0
                     },
                     {
                         "name": "КС ПМО 6",
                         "bytes": "08",
-                        "type": "uint16",
-                        "default": 6553
+                        "type": "float",
+                        "default": 0
                     },
                     {
                         "name": "КС ПМО 7",
                         "bytes": "09",
-                        "type": "uint16",
-                        "default": 6553
+                        "type": "float",
+                        "default": 0
                     },
                     {
                         "name": "КС ПМО 8",
                         "bytes": "0A",
-                        "type": "uint16",
-                        "default": 6553
+                        "type": "float",
+                        "default": 0
                     },
                     {
                         "name": "Серийный №",
                         "bytes": "0B",
-                        "type": "uint16",
-                        "default": 6553
+                        "type": "float",
+                        "default": 0
                     }
                 ]
             },
@@ -454,8 +454,8 @@
                     {
                         "name": "Версия ПМО",
                         "bytes": "01",
-                        "type": "uint16",
-                        "default": 6553
+                        "type": "float",
+                        "default": 0
                     },
                     {
                         "name": "Дата ПМО",
@@ -466,56 +466,56 @@
                     {
                         "name": "КС ПМО 1",
                         "bytes": "03",
-                        "type": "uint16",
-                        "default": 6553
+                        "type": "float",
+                        "default": 0
                     },
                     {
                         "name": "КС ПМО 2",
                         "bytes": "04",
-                        "type": "uint16",
-                        "default": 6553
+                        "type": "float",
+                        "default": 0
                     },
                     {
                         "name": "КС ПМО 3",
                         "bytes": "05",
-                        "type": "uint16",
-                        "default": 6553
+                        "type": "float",
+                        "default": 0
                     },
                     {
                         "name": "КС ПМО 4",
                         "bytes": "06",
-                        "type": "uint16",
-                        "default": 6553
+                        "type": "float",
+                        "default": 0
                     },
                     {
                         "name": "КС ПМО 5",
                         "bytes": "07",
-                        "type": "uint16",
-                        "default": 6553
+                        "type": "float",
+                        "default": 0
                     },
                     {
                         "name": "КС ПМО 6",
                         "bytes": "08",
-                        "type": "uint16",
-                        "default": 6553
+                        "type": "float",
+                        "default": 0
                     },
                     {
                         "name": "КС ПМО 7",
                         "bytes": "09",
-                        "type": "uint16",
-                        "default": 6553
+                        "type": "float",
+                        "default": 0
                     },
                     {
                         "name": "КС ПМО 8",
                         "bytes": "0A",
-                        "type": "uint16",
-                        "default": 6553
+                        "type": "float",
+                        "default": 0
                     },
                     {
                         "name": "Серийный №",
                         "bytes": "0B",
-                        "type": "uint16",
-                        "default": 6553
+                        "type": "float",
+                        "default": 0
                     }
                 ]
             }
@@ -532,20 +532,20 @@
                     {
                         "name": "Значение курса",
                         "bytes": "55",
-                        "type": "uint16",
-                        "default": 6553
+                        "type": "float",
+                        "default": 0
                     },
                     {
                         "name": "Значение крена",
                         "bytes": "56",
-                        "type": "uint16",
-                        "default": 6553
+                        "type": "float",
+                        "default": 0
                     },
                     {
                         "name": "Значение тангажа",
                         "bytes": "57",
-                        "type": "uint16",
-                        "default": 6553
+                        "type": "float",
+                        "default": 0
                     }
                 ]
             },
@@ -556,20 +556,20 @@
                     {
                         "name": "Значение курса",
                         "bytes": "55",
-                        "type": "uint16",
-                        "default": 6553
+                        "type": "float",
+                        "default": 0
                     },
                     {
                         "name": "Значение крена",
                         "bytes": "56",
-                        "type": "uint16",
-                        "default": 6553
+                        "type": "float",
+                        "default": 0
                     },
                     {
                         "name": "Значение тангажа",
                         "bytes": "57",
-                        "type": "uint16",
-                        "default": 6553
+                        "type": "float",
+                        "default": 0
                     }
                 ]
             }

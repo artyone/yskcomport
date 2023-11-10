@@ -1,19 +1,26 @@
 import sys
-from functools import partial
 import typing
-from PyQt6 import QtCore, QtGui
+from functools import partial
+from typing import NamedTuple
 
+from PyQt6 import QtCore, QtGui
 from PyQt6.QtCore import QCoreApplication, QProcess, QSettings, Qt
-from PyQt6.QtGui import (QColor, QCursor, QIcon, QKeyEvent, QMovie, QPainter,
-                         QPixmap, QResizeEvent)
-from PyQt6.QtWidgets import (QApplication, QLabel, QWidget, QPushButton,
-                             QVBoxLayout, QHBoxLayout, QFormLayout, QMenu, QMessageBox,
-                             QSpinBox, QSplitter, QLineEdit, QTabWidget, QGroupBox, QDateEdit)
+from PyQt6.QtGui import (QAction, QColor, QCursor, QFont, QIcon, QKeyEvent,
+                         QMovie, QPainter, QPixmap, QResizeEvent)
+from PyQt6.QtWidgets import (QApplication, QDateEdit, QFormLayout, QGroupBox,
+                             QHBoxLayout, QLabel, QLineEdit, QMenu,
+                             QMessageBox, QPushButton, QSpinBox, QSplitter,
+                             QTabWidget, QVBoxLayout, QWidget)
 from PyQt6.sip import delete
-from PyQt6.QtGui import QAction, QIcon, QFont
 
 from .controller import Controller
 
+
+class ElementData(NamedTuple):
+    category: str
+    group: str
+    element: str
+    data: str
 
 class LineWidget(QWidget):
     def __init__(self,
@@ -53,6 +60,9 @@ class LineWidget(QWidget):
         layout.addWidget(label, 1)
         layout.addWidget(self.data_widget, 3)
 
+    def get_input_data(self):
+        return ElementData(self.category, self.group, self.element, self.data_widget.text())
+
 
 class GroupBox(QGroupBox):
     def __init__(
@@ -72,9 +82,16 @@ class GroupBox(QGroupBox):
         layout = QFormLayout(self)
         self.setLayout(layout)
 
-        for element in self.ctrl.get_element_names(self.category, self.group):
-            layout.addWidget(
-                LineWidget(ctrl=self.ctrl, category=self.category, group=self.group, element=element))
+        self.widgets = [
+            LineWidget(ctrl=self.ctrl, category=self.category, group=self.group, element=element)
+            for element in self.ctrl.get_element_names(self.category, self.group)
+        ]
+
+        for widget in self.widgets:
+            layout.addWidget(widget)
+
+    def get_data_from_widgets(self):
+        return [widget.get_input_data() for widget in self.widgets]
 
 
 class GroupBoxesWidget(QWidget):
@@ -87,9 +104,20 @@ class GroupBoxesWidget(QWidget):
     def initUI(self):
         layout = QHBoxLayout()
         self.setLayout(layout)
-        for group in self.ctrl.get_group_names(self.category):
-            layout.addWidget(
-                GroupBox(ctrl=self.ctrl, category=self.category, group=group))
+
+        self.widgets = [
+            GroupBox(ctrl=self.ctrl, category=self.category, group=group)
+            for group in self.ctrl.get_group_names(self.category)
+        ]
+
+        for widget in self.widgets:
+            layout.addWidget(widget)
+        
+    def get_data_from_widgets(self):
+        result = []
+        for widget in self.widgets:
+            result.extend(widget.get_data_from_widgets())
+        return result
 
 
 class TabWidget(QTabWidget):
@@ -100,6 +128,17 @@ class TabWidget(QTabWidget):
 
     def initUI(self):
         self.setTabPosition(QTabWidget.TabPosition.North)
-        for category in self.ctrl.get_category_names():
-            self.addTab(GroupBoxesWidget(
-                ctrl=self.ctrl, category=category), category)
+        self.widgets = [
+            GroupBoxesWidget(ctrl=self.ctrl, category=category)
+            for category in self.ctrl.get_category_names()
+        ]
+        for widget in self.widgets:
+            self.addTab(widget, widget.category)
+        
+    def get_data_from_widgets(self):
+        result = []
+        for widget in self.widgets:
+            result.extend(widget.get_data_from_widgets())
+        return result
+            
+    
