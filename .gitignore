@@ -1,1 +1,4 @@
 /.venv
+app/__pycache__
+.gitignore
+test.py
