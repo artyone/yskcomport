@@ -2,7 +2,6 @@ import json as js
 import os
 import time
 
-from icecream import ic
 from jsonschema import validate
 
 from .json_data import get_default_json_data, get_json_schema
@@ -17,6 +16,7 @@ class Controller:
         self.parent = parent
         self._json_data = self._get_data_from_json()
         self.validate_json()
+        self.table_bytes = self.get_table_bytes()
 
     def _get_data_from_json(self):
         filepath = os.path.join(os.getcwd(), 'data.json')
@@ -86,11 +86,77 @@ class Controller:
 
     @staticmethod
     def volts_to_int(volts):
-        return round(volts / 3.3 * 4096)
+        return round(float(volts) / 3.3 * 4096)
 
-    def send_data_to_temp_memory(self, widget_datas):
-        for data in widget_datas:
-            self.send_command(data)
+    @staticmethod
+    def int_to_volts(num):
+        return round(num * 3.3 / 4096, 2)
 
-    def send_command(self, data):
-        pass
+    @staticmethod
+    def split_int_to_bytes(number):
+        # Переводим число в двоичное представление и обрезаем "0b" в начале
+        binary_representation = bin(number)[2:]
+
+        # Дополняем нулями слева до достижения 16 бит
+        binary_representation = binary_representation.zfill(16)
+
+        # Берем первые 8 бит
+        byte1 = int(binary_representation[:8], 2)
+
+        # Берем следующие 8 бит
+        byte2 = int(binary_representation[8:], 2)
+
+        return [byte1, byte2]
+
+    @staticmethod
+    def date_to_int(date):
+        day, month, year = [int(i) for i in date.split('.')]
+        result = ''
+        result += bin(year % 100)[2:].zfill(7)[::-1][:7][::-1]
+        result += bin(month)[2:].zfill(4)[::-1][:4][::-1]
+        result += bin(day)[2:].zfill(5)[::-1][:5][::-1]
+        byte1, byte2 = int(result[:8], 2), int(result[8:], 2)
+        return [byte1, byte2]
+
+    def get_data_for_temp_memory(self, widget_datas):
+        return [self.get_command(data) for data in widget_datas]
+
+    def get_command(self, data):
+        command_list = []
+        command_list.append(
+            int(self.table_bytes[data.category]['bytes'][:2], base=16))
+        command_list.append(
+            int(self.table_bytes[data.category]['bytes'][2:4], base=16))
+        command_list.append(
+            int(self.table_bytes[data.category]['bytes'][4:], base=16))
+        command_list.append(
+            int(self.table_bytes[data.category][data.group]['bytes'], base=16))
+        command_list.append(
+            int(self.table_bytes[data.category][data.group][data.element]['bytes'], base=16))
+        if data.type == 'date':
+            command_list.extend(self.date_to_int(data.data))
+        else:
+            command_list.extend(self.split_int_to_bytes(
+                self.volts_to_int(data.data)))
+        control_sum = sum(command_list) & 0xFF
+        command_list.append(control_sum)
+        result = bytes(command_list)
+        return result
+
+    def get_table_bytes(self):
+        result = {}
+        for category_data in self._json_data:
+            category_name = category_data['name']
+            result[category_name] = {'bytes': category_data['fixed_bytes']}
+            for group in category_data['groups']:
+                group_name = group['name']
+                result[category_name][group_name] = {'bytes': group['bytes']}
+                for element in group['elements']:
+                    element_name = element['name']
+                    result[category_name][group_name][element_name] = {
+                        'bytes': element['bytes']}
+        return result
+
+    def get_apply_command(self):
+        command = '53 08 14 50 50 00 00 0F'
+        return bytes.fromhex(command)

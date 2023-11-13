@@ -373,81 +373,9 @@ def get_default_json_data():
                     ]
         },
         {
-            "name": "Информация о ПМО",
+            "name": "Опрос текущей инормации о ПМО",
                     "fixed_bytes": "530814",
                     "groups": [
-                        {
-                            "name": "Ввод информации о ПМО",
-                            "bytes": "53",
-                            "elements": [
-                                {
-                                    "name": "Версия ПМО",
-                                    "bytes": "01",
-                                    "type": "float",
-                                    "default": 0
-                                },
-                                {
-                                    "name": "Дата ПМО",
-                                    "bytes": "02",
-                                    "type": "date",
-                                    "default": "12.12.2012"
-                                },
-                                {
-                                    "name": "КС ПМО 1",
-                                    "bytes": "03",
-                                    "type": "float",
-                                    "default": 0
-                                },
-                                {
-                                    "name": "КС ПМО 2",
-                                    "bytes": "04",
-                                    "type": "float",
-                                    "default": 0
-                                },
-                                {
-                                    "name": "КС ПМО 3",
-                                    "bytes": "05",
-                                    "type": "float",
-                                    "default": 0
-                                },
-                                {
-                                    "name": "КС ПМО 4",
-                                    "bytes": "06",
-                                    "type": "float",
-                                    "default": 0
-                                },
-                                {
-                                    "name": "КС ПМО 5",
-                                    "bytes": "07",
-                                    "type": "float",
-                                    "default": 0
-                                },
-                                {
-                                    "name": "КС ПМО 6",
-                                    "bytes": "08",
-                                    "type": "float",
-                                    "default": 0
-                                },
-                                {
-                                    "name": "КС ПМО 7",
-                                    "bytes": "09",
-                                    "type": "float",
-                                    "default": 0
-                                },
-                                {
-                                    "name": "КС ПМО 8",
-                                    "bytes": "0A",
-                                    "type": "float",
-                                    "default": 0
-                                },
-                                {
-                                    "name": "Серийный №",
-                                    "bytes": "0B",
-                                    "type": "float",
-                                    "default": 0
-                                }
-                            ]
-                        },
                         {
                             "name": "Опрос информации о ПМО",
                             "bytes": "54",
@@ -462,7 +390,7 @@ def get_default_json_data():
                                     "name": "Дата ПМО",
                                     "bytes": "02",
                                     "type": "date",
-                                    "default": "12.12.2012"
+                                    "default": "00.00.0000"
                                 },
                                 {
                                     "name": "КС ПМО 1",
@@ -523,11 +451,89 @@ def get_default_json_data():
                     ]
         },
         {
-            "name": "Eeprom",
+            "name": "Ввод инормации о ПМО",
                     "fixed_bytes": "530814",
                     "groups": [
                         {
-                            "name": "Cчитать текущее значение из eeprom",
+                            "name": "Ввод информации о ПМО",
+                            "bytes": "53",
+                            "elements": [
+                                {
+                                    "name": "Версия ПМО",
+                                    "bytes": "01",
+                                    "type": "float",
+                                    "default": 0
+                                },
+                                {
+                                    "name": "Дата ПМО",
+                                    "bytes": "02",
+                                    "type": "date",
+                                    "default": "02.09.2017"
+                                },
+                                {
+                                    "name": "КС ПМО 1",
+                                    "bytes": "03",
+                                    "type": "float",
+                                    "default": 0
+                                },
+                                {
+                                    "name": "КС ПМО 2",
+                                    "bytes": "04",
+                                    "type": "float",
+                                    "default": 0
+                                },
+                                {
+                                    "name": "КС ПМО 3",
+                                    "bytes": "05",
+                                    "type": "float",
+                                    "default": 0
+                                },
+                                {
+                                    "name": "КС ПМО 4",
+                                    "bytes": "06",
+                                    "type": "float",
+                                    "default": 0
+                                },
+                                {
+                                    "name": "КС ПМО 5",
+                                    "bytes": "07",
+                                    "type": "float",
+                                    "default": 0
+                                },
+                                {
+                                    "name": "КС ПМО 6",
+                                    "bytes": "08",
+                                    "type": "float",
+                                    "default": 0
+                                },
+                                {
+                                    "name": "КС ПМО 7",
+                                    "bytes": "09",
+                                    "type": "float",
+                                    "default": 0
+                                },
+                                {
+                                    "name": "КС ПМО 8",
+                                    "bytes": "0A",
+                                    "type": "float",
+                                    "default": 0
+                                },
+                                {
+                                    "name": "Серийный №",
+                                    "bytes": "0B",
+                                    "type": "float",
+                                    "default": 0
+                                }
+                            ]
+                        }
+                    ]
+        },
+        {
+            "name": "Опрос текущей информации из Eeprom",
+                    "fixed_bytes": "530814",
+                    "groups": [
+                        {
+                            "name": "Cчитать текущее значение из Eeprom",
                             "bytes": "50",
                             "elements": [
                                 {
@@ -550,6 +556,12 @@ def get_default_json_data():
                                 }
                             ]
                         },
+                    ]
+        },
+        {
+            "name": "Ввод поправок в Eeprom",
+                    "fixed_bytes": "530814",
+                    "groups": [
                         {
                             "name": "Ввод поправок в eeprom",
                             "bytes": "55",

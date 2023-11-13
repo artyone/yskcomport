@@ -2,3 +2,7 @@
 app/__pycache__
 .gitignore
 test.py
+.vscode
+*.spec
+/build
+/dist

@@ -1,8 +1,11 @@
 import sys
 
+from icecream import install
 from PyQt6.QtWidgets import QApplication
 
 from app import MainWindow
+
+install()
 
 
 def main() -> None:
