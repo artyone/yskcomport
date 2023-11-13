@@ -5,10 +5,10 @@ from PyQt6.QtWidgets import (QDateEdit, QFormLayout, QGroupBox, QHBoxLayout,
                              QLabel, QLineEdit, QPushButton, QTabWidget,
                              QVBoxLayout, QWidget)
 
-from .controller import Controller
+from .controller import Controller, ElementData
 
 
-class ElementData(NamedTuple):
+class ElementData2(NamedTuple):
     category: str
     group: str
     element: str
@@ -29,11 +29,11 @@ class LineWidget(QWidget):
         self.category = category
         self.group = group
         self.element = element
-        info = self.ctrl.get_element_data(
+        info:ElementData = self.ctrl.get_element_data(
             self.category, self.group, self.element)
-        self.name = info['name']
-        self.default = info['default']
-        self.type = info['type']
+        self.name = info.element_name
+        self.default = info.data
+        self.type = info.type
         self.initUI()
 
     def initUI(self):
@@ -53,11 +53,11 @@ class LineWidget(QWidget):
                 QDate.fromString(self.default, "dd.MM.yyyy"))
         else:
             self.data_widget = QLineEdit(str(self.default))
-        layout.addWidget(label, 1)
-        layout.addWidget(self.data_widget, 3)
+        layout.addWidget(label)
+        layout.addWidget(self.data_widget)
 
     def get_input_data(self):
-        return ElementData(self.category, self.group, self.element, self.type, self.data_widget.text())
+        return ElementData2(self.category, self.group, self.element, self.type, self.data_widget.text())
 
 
 class GroupBox(QGroupBox):

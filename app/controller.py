@@ -1,14 +1,27 @@
 import json as js
 import os
 import time
-
+from typing import NamedTuple
 from jsonschema import validate
 
 from .json_data import get_default_json_data, get_json_schema
+#from json_data import get_default_json_data, get_json_schema
+from icecream import ic
 
 
 class JsonException(Exception):
     ...
+
+
+class ElementData(NamedTuple):
+    category_name: str
+    category_bytes: str
+    group_name: str
+    group_bytes: str
+    element_name: str
+    element_bytes: str
+    type: str
+    data: str
 
 
 class Controller:
@@ -16,6 +29,7 @@ class Controller:
         self.parent = parent
         self._json_data = self._get_data_from_json()
         self.validate_json()
+        self._data = self.generate_data()
         self.table_bytes = self.get_table_bytes()
 
     def _get_data_from_json(self):
@@ -38,39 +52,42 @@ class Controller:
         with open(filepath, 'w', encoding='utf-8') as file:
             js.dump(self._json_data, file, ensure_ascii=False, indent=4)
 
+    def generate_data(self):
+        data = []
+        for category in self._json_data:
+            for group in category['groups']:
+                for element in group['elements']:
+                    data.append(
+                        ElementData(category['category_name'],
+                                    category['category_bytes'],
+                                    group['group_name'],
+                                    group['group_bytes'],
+                                    element['element_name'],
+                                    element['element_bytes'],
+                                    element['type'],
+                                    element['default']))
+        return data
+
     def get_category_datas(self):
-        return self._json_data
+        return self._data
 
     def get_category_names(self):
-        if self._json_data is None:
-            return []
-        return [category['name'] for category in self._json_data]
+        return sorted({data.category_name for data in self._data})
 
     def get_group_datas(self, category_name):
-        for category in self.get_category_datas():
-            if category['name'] == category_name:
-                return category['groups']
-        return []
+        return [data for data in self._data if data.category_name == category_name]
 
     def get_group_names(self, category_name):
-        groups = self.get_group_datas(category_name)
-        return [group['name'] for group in groups]
+        return sorted({data.group_name for data in self.get_group_datas(category_name)})
 
     def get_element_datas(self, category_name, group_name):
-        for group in self.get_group_datas(category_name):
-            if group['name'] == group_name:
-                return group['elements']
-        return []
+        return [data for data in self.get_group_datas(category_name) if data.group_name == group_name]
 
     def get_element_names(self, category_name, group_name):
-        elements = self.get_element_datas(category_name, group_name)
-        return [element['name'] for element in elements]
+        return sorted({data.element_name for data in self.get_element_datas(category_name, group_name)})
 
     def get_element_data(self, category_name, group_name, element_name):
-        for element in self.get_element_datas(category_name, group_name):
-            if element['name'] == element_name:
-                return element
-        return {}
+        return [data for data in self.get_element_datas(category_name, group_name) if data.element_name == element_name][0]
 
     def set_new_fixed_bytes(self, new_bytes: str):
         try:
@@ -146,17 +163,25 @@ class Controller:
     def get_table_bytes(self):
         result = {}
         for category_data in self._json_data:
-            category_name = category_data['name']
-            result[category_name] = {'bytes': category_data['fixed_bytes']}
+            category_name = category_data['category_name']
+            result[category_name] = {'bytes': category_data['category_bytes']}
             for group in category_data['groups']:
-                group_name = group['name']
-                result[category_name][group_name] = {'bytes': group['bytes']}
+                group_name = group['group_name']
+                result[category_name][group_name] = {'bytes': group['group_bytes']}
                 for element in group['elements']:
-                    element_name = element['name']
+                    element_name = element['element_name']
                     result[category_name][group_name][element_name] = {
-                        'bytes': element['bytes']}
+                        'bytes': element['element_bytes']}
         return result
 
     def get_apply_command(self):
         command = '53 08 14 50 50 00 00 0F'
         return bytes.fromhex(command)
+
+
+if __name__ == '__main__':
+    controller = Controller(parent=None)
+    category = controller.get_category_names()[5]
+    group = controller.get_group_names(category)[0]
+    element = controller.get_element_names(category, group)[0]
+    print(controller.get_element_data(category, group, element))

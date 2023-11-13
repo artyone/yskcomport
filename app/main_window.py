@@ -37,6 +37,7 @@ class MainWindow(QMainWindow):
         try:
             self.ctrl = Controller(self)
         except Exception as e:
+            print(str(e))
             if self.show_message_box('Ошибка файла json, восстановить файл по-умолчанию?'):
                 Controller.generate_json()
                 self.ctrl = Controller(self)
