@@ -1,8 +1,9 @@
 import json as js
 import os
 import time
-from typing import NamedTuple
+from dataclasses import dataclass
 from jsonschema import validate
+from typing import Any
 
 from .json_data import get_default_json_data, get_json_schema
 #from json_data import get_default_json_data, get_json_schema
@@ -12,16 +13,18 @@ from icecream import ic
 class JsonException(Exception):
     ...
 
-
-class ElementData(NamedTuple):
+@dataclass
+class ElementData:
     category_name: str
     category_bytes: str
+    is_input: bool
     group_name: str
     group_bytes: str
     element_name: str
     element_bytes: str
-    type: str
-    data: str
+    is_num: str
+    data: str | float
+    widget: Any = None
 
 
 class Controller:
@@ -60,11 +63,12 @@ class Controller:
                     data.append(
                         ElementData(category['category_name'],
                                     category['category_bytes'],
+                                    category['is_input'], 
                                     group['group_name'],
                                     group['group_bytes'],
                                     element['element_name'],
                                     element['element_bytes'],
-                                    element['type'],
+                                    element['is_num'],
                                     element['default']))
         return data
 
@@ -89,13 +93,13 @@ class Controller:
     def get_element_data(self, category_name, group_name, element_name):
         return [data for data in self.get_element_datas(category_name, group_name) if data.element_name == element_name][0]
 
-    def set_new_fixed_bytes(self, new_bytes: str):
-        try:
-            for category in self._json_data:
-                category['fixed_bytes'] = new_bytes
-            self.save_json()
-        except:
-            raise JsonException
+    # def set_new_fixed_bytes(self, new_bytes: str):
+    #     try:
+    #         for category in self._json_data:
+    #             category['fixed_bytes'] = new_bytes
+    #         self.save_json()
+    #     except:
+    #         raise JsonException
 
     def validate_json(self):
         schema = get_json_schema()
@@ -127,6 +131,8 @@ class Controller:
 
     @staticmethod
     def date_to_int(date):
+        if len(date) != 10:
+            date = '00.00.0000'
         day, month, year = [int(i) for i in date.split('.')]
         result = ''
         result += bin(year % 100)[2:].zfill(7)[::-1][:7][::-1]
@@ -134,27 +140,36 @@ class Controller:
         result += bin(day)[2:].zfill(5)[::-1][:5][::-1]
         byte1, byte2 = int(result[:8], 2), int(result[8:], 2)
         return [byte1, byte2]
+    
+    @staticmethod
+    def category_bytes_to_intlist(category_bytes):
+        first_num = int(category_bytes[:2], base=16)
+        second_num = int(category_bytes[2:4], base=16)
+        third_num = int(category_bytes[4:], base=16)
+        return [first_num, second_num, third_num]
 
     def get_data_for_temp_memory(self, widget_datas):
+        widget_datas = sorted(widget_datas, key=lambda x: (x.group_bytes, x.element_bytes))
         return [self.get_command(data) for data in widget_datas]
 
-    def get_command(self, data):
+    def get_command(self, element):
         command_list = []
+        command_list.extend(self.category_bytes_to_intlist(
+            element.category_bytes
+        ))
         command_list.append(
-            int(self.table_bytes[data.category]['bytes'][:2], base=16))
+            int(element.group_bytes, base=16))
         command_list.append(
-            int(self.table_bytes[data.category]['bytes'][2:4], base=16))
-        command_list.append(
-            int(self.table_bytes[data.category]['bytes'][4:], base=16))
-        command_list.append(
-            int(self.table_bytes[data.category][data.group]['bytes'], base=16))
-        command_list.append(
-            int(self.table_bytes[data.category][data.group][data.element]['bytes'], base=16))
-        if data.type == 'date':
-            command_list.extend(self.date_to_int(data.data))
+            int(element.element_bytes, base=16))
+        if element.is_input:
+            if element.is_num:
+                command_list.extend(self.split_int_to_bytes(
+                    self.volts_to_int(element.data)))
+            else:
+                command_list.extend(self.date_to_int(element.data))
         else:
-            command_list.extend(self.split_int_to_bytes(
-                self.volts_to_int(data.data)))
+            command_list.extend([0, 0])
+            
         control_sum = sum(command_list) & 0xFF
         command_list.append(control_sum)
         result = bytes(command_list)
@@ -177,6 +192,19 @@ class Controller:
     def get_apply_command(self):
         command = '53 08 14 50 50 00 00 0F'
         return bytes.fromhex(command)
+    
+    def get_element_from_answer(self, message):
+        from random import choice, randint
+        bytes = message.toHex().data().decode('utf-8').upper()
+        main_bytes = bytes[:6]
+        #TODO проверка контрольной суммы на 530841
+        group_bytes = bytes[6:8]
+        element_bytes = bytes[8:10]
+
+        element = [i for i in self._data if i.group_bytes == group_bytes and i.element_bytes == element_bytes][0]
+
+        element.data = randint(0, 25)
+        return element
 
 
 if __name__ == '__main__':

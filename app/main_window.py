@@ -29,7 +29,7 @@ class MainWindow(QMainWindow):
         self.restoreGeometry(geometry)
 
         self.app.setWindowIcon(QIcon('resource/vise-drawer.png'))
-        self.setWindowTitle('YSK, ver. 23.11.13')
+        self.setWindowTitle('YSK, ver. 24.11.13')
 
         self.serial_port = QSerialPort(self)
         self.serial_port.readyRead.connect(self.read_data)
@@ -57,16 +57,16 @@ class MainWindow(QMainWindow):
         self.port_combobox.currentIndexChanged.connect(self.close_serial_port)
 
         open_close_layout = QHBoxLayout()
-        self.open_button = QPushButton('Открыть COM-порт', self)
-        self.open_button.clicked.connect(self.open_serial_port)
-        self.close_button = QPushButton('Закрыть COM-порт', self)
-        self.close_button.clicked.connect(self.close_serial_port)
-        open_close_layout.addWidget(self.open_button)
-        open_close_layout.addWidget(self.close_button)
+        self.open_port_button = QPushButton('Открыть COM-порт', self)
+        self.open_port_button.clicked.connect(self.open_serial_port)
+        self.close_port_button = QPushButton('Закрыть COM-порт', self)
+        self.close_port_button.clicked.connect(self.close_serial_port)
+        open_close_layout.addWidget(self.open_port_button)
+        open_close_layout.addWidget(self.close_port_button)
         self.main_layout.addLayout(open_close_layout)
 
         splitter = QSplitter()
-        self.tabs = TabWidget(main_window=self, ctrl=self.ctrl)
+        self.tabs = TabWidget(ctrl=self.ctrl)
         self.console_widget = QPlainTextEdit()
 
         splitter.addWidget(self.tabs)
@@ -76,6 +76,9 @@ class MainWindow(QMainWindow):
 
         self.timer = QTimer(self)
         self.timer.timeout.connect(self.send_next_command)
+
+        self.tabs.block_buttons(True)
+
 
     def resizeEvent(self, a0: QResizeEvent | None) -> None:
         self.settings.setValue('geometry', self.saveGeometry())
@@ -95,7 +98,7 @@ class MainWindow(QMainWindow):
         self.progress_bar.setMaximum(len(self.commands))
         self.main_layout.addWidget(self.progress_bar)
 
-        self.block_all_buttons(True)
+        self.block_all_elements(True)
         self.timer.start(50)
 
     def send_next_command(self):
@@ -107,13 +110,14 @@ class MainWindow(QMainWindow):
             self.set_console_text(f'Команда отправлена: {self.command_byte_to_str(command)}')
         else:
             self.timer.stop()
-            self.block_all_buttons(False)
+            self.block_all_elements(False)
             self.set_console_text(f'Команд отправлено: {len(self.commands)}')
             self.progress_bar.deleteLater()
     
-    def block_all_buttons(self, value: bool):
-        self.open_button.setDisabled(value)
-        self.close_button.setDisabled(value)
+    def block_all_elements(self, value: bool):
+        self.open_port_button.setDisabled(value)
+        self.close_port_button.setDisabled(value)
+        self.port_combobox.setDisabled(value)
         self.tabs.block_buttons(value)
 
     @staticmethod
@@ -133,6 +137,7 @@ class MainWindow(QMainWindow):
     def read_data(self):
         data = self.serial_port.readAll()
         self.set_console_text(f"Приняты данные: {self.command_byte_to_str(data.data())}")
+        self.ctrl.get_element_from_answer(data).widget.update_data()
 
     def restart_app(self) -> None:
         program = sys.executable
@@ -171,12 +176,14 @@ class MainWindow(QMainWindow):
         else:
             self.set_console_text(
                 f'Порт {self.serial_port.portName()} НЕ открыт.', 'error')
+        self.tabs.block_buttons(False)
 
     def close_serial_port(self):
         if self.serial_port.isOpen():
             self.serial_port.close()
             self.set_console_text(
                 f"Порт {self.serial_port.portName()} закрыт.")
+            self.tabs.block_buttons(True)
 
     def set_console_text(self, text: str, type='info'):
         current_time = QTime.currentTime().toString("hh:mm:zzz")
