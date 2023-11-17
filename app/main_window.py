@@ -29,7 +29,7 @@ class MainWindow(QMainWindow):
         self.restoreGeometry(geometry)
 
         self.app.setWindowIcon(QIcon('resource/vise-drawer.png'))
-        self.setWindowTitle('YSK, ver. 24.11.13')
+        self.setWindowTitle('YSK, ver. 24.11.17')
 
         self.serial_port = QSerialPort(self)
         self.serial_port.readyRead.connect(self.read_data)
