@@ -2,16 +2,22 @@ import json as js
 import os
 import time
 from dataclasses import dataclass
-from jsonschema import validate
 from typing import Any
 
-from .json_data import get_default_json_data, get_json_schema
-#from json_data import get_default_json_data, get_json_schema
+# from json_data import get_default_json_data, get_json_schema
 from icecream import ic
+from jsonschema import validate
+
+from .json_data import get_default_json_data, get_json_schema
 
 
 class JsonException(Exception):
     ...
+
+
+class AnswerException(Exception):
+    ...
+
 
 @dataclass
 class ElementData:
@@ -22,7 +28,7 @@ class ElementData:
     group_bytes: str
     element_name: str
     element_bytes: str
-    is_num: str
+    type: str
     data: str | float
     widget: Any = None
 
@@ -61,15 +67,17 @@ class Controller:
             for group in category['groups']:
                 for element in group['elements']:
                     data.append(
-                        ElementData(category['category_name'],
-                                    category['category_bytes'],
-                                    category['is_input'], 
-                                    group['group_name'],
-                                    group['group_bytes'],
-                                    element['element_name'],
-                                    element['element_bytes'],
-                                    element['is_num'],
-                                    element['default']))
+                        ElementData(
+                            category['category_name'],
+                            category['category_bytes'],
+                            category['is_input'],
+                            group['group_name'],
+                            group['group_bytes'],
+                            element['element_name'],
+                            element['element_bytes'],
+                            element['type'],
+                            element['default']
+                        ))
         return data
 
     def get_category_datas(self):
@@ -115,41 +123,43 @@ class Controller:
 
     @staticmethod
     def split_int_to_bytes(number):
-        # Переводим число в двоичное представление и обрезаем "0b" в начале
-        binary_representation = bin(number)[2:]
-
-        # Дополняем нулями слева до достижения 16 бит
-        binary_representation = binary_representation.zfill(16)
-
-        # Берем первые 8 бит
-        byte1 = int(binary_representation[:8], 2)
-
-        # Берем следующие 8 бит
-        byte2 = int(binary_representation[8:], 2)
-
+        if number > 65535:
+            number = 65535
+        byte1 = (number >> 8) & 0xFF
+        byte2 = number & 0xFF
         return [byte1, byte2]
 
     @staticmethod
     def date_to_int(date):
-        if len(date) != 10:
-            date = '00.00.0000'
+        if len(date) != 8:
+            date = '00.00.00'
         day, month, year = [int(i) for i in date.split('.')]
-        result = ''
-        result += bin(year % 100)[2:].zfill(7)[::-1][:7][::-1]
-        result += bin(month)[2:].zfill(4)[::-1][:4][::-1]
-        result += bin(day)[2:].zfill(5)[::-1][:5][::-1]
+        result = f'{year:07b}{month:04b}{day:05b}'
         byte1, byte2 = int(result[:8], 2), int(result[8:], 2)
         return [byte1, byte2]
-    
+
+    @staticmethod
+    def hex_to_date(bytes_data):
+        if len(bytes_data) != 4:
+            return '00.00.0000'
+
+        bin_data = bin(int(bytes_data, 16))[2:].zfill(16)
+
+        year = str(int(bin_data[:7], 2)).zfill(2)
+        month = str(int(bin_data[7:11], 2)).zfill(2)
+        day = str(int(bin_data[11:], 2)).zfill(2)
+        return f'{day}.{month}.{year}'
+
     @staticmethod
     def category_bytes_to_intlist(category_bytes):
         first_num = int(category_bytes[:2], base=16)
         second_num = int(category_bytes[2:4], base=16)
         third_num = int(category_bytes[4:], base=16)
-        return [first_num, second_num, third_num]
+        return first_num, second_num, third_num
 
     def get_data_for_temp_memory(self, widget_datas):
-        widget_datas = sorted(widget_datas, key=lambda x: (x.group_bytes, x.element_bytes))
+        widget_datas = sorted(widget_datas, key=lambda x: (
+            x.group_bytes, x.element_bytes))
         return [self.get_command(data) for data in widget_datas]
 
     def get_command(self, element):
@@ -162,14 +172,18 @@ class Controller:
         command_list.append(
             int(element.element_bytes, base=16))
         if element.is_input:
-            if element.is_num:
+            if element.type == 'volts':
                 command_list.extend(self.split_int_to_bytes(
                     self.volts_to_int(element.data)))
-            else:
+            elif element.type == 'date':
                 command_list.extend(self.date_to_int(element.data))
+            else:
+                command_list.extend(
+                    [int(element.data[:2], base=16),
+                     int(element.data[2:], base=16)])
         else:
             command_list.extend([0, 0])
-            
+
         control_sum = sum(command_list) & 0xFF
         command_list.append(control_sum)
         result = bytes(command_list)
@@ -182,7 +196,8 @@ class Controller:
             result[category_name] = {'bytes': category_data['category_bytes']}
             for group in category_data['groups']:
                 group_name = group['group_name']
-                result[category_name][group_name] = {'bytes': group['group_bytes']}
+                result[category_name][group_name] = {
+                    'bytes': group['group_bytes']}
                 for element in group['elements']:
                     element_name = element['element_name']
                     result[category_name][group_name][element_name] = {
@@ -192,19 +207,28 @@ class Controller:
     def get_apply_command(self):
         command = '53 08 14 50 50 00 00 0F'
         return bytes.fromhex(command)
-    
+
     def get_element_from_answer(self, message):
-        from random import choice, randint
-        bytes = message.toHex().data().decode('utf-8').upper()
-        main_bytes = bytes[:6]
-        #TODO проверка контрольной суммы на 530841
-        group_bytes = bytes[6:8]
-        element_bytes = bytes[8:10]
+        bytes_data = message.toHex().data().decode('utf-8').upper()
+        main_bytes = bytes_data[:6]
+        if main_bytes != '530841':
+            raise AnswerException
 
-        element = [i for i in self._data if i.group_bytes == group_bytes and i.element_bytes == element_bytes][0]
+        group_bytes = bytes_data[6:8]
+        element_bytes = bytes_data[8:10]
+        element_data = bytes_data[10:14]
 
-        element.data = randint(0, 25)
-        return element
+        for element in self._data:
+            if element.group_bytes == group_bytes and element.element_bytes == element_bytes:
+                if element.type == 'volts':
+                    from random import randint
+                    element.data = randint(0, 25)
+                elif element.type == 'date':
+                    element.data = self.hex_to_date(element_data)
+                else:
+                    element.data = element_data
+                return element.widget
+        return None
 
 
 if __name__ == '__main__':

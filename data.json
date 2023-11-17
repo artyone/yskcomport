@@ -11,67 +11,67 @@
                     {
                         "element_name": "2.5(1) V  max",
                         "element_bytes": "01",
-                        "is_num": true,
+                        "type": "volts",
                         "default": 0
                     },
                     {
                         "element_name": "2.5(2) V  max",
                         "element_bytes": "02",
-                        "is_num": true,
+                        "type": "volts",
                         "default": 0
                     },
                     {
                         "element_name": "3.3 V МЦО max",
                         "element_bytes": "03",
-                        "is_num": true,
+                        "type": "volts",
                         "default": 0
                     },
                     {
                         "element_name": "1.25 V max",
                         "element_bytes": "05",
-                        "is_num": true,
+                        "type": "volts",
                         "default": 0
                     },
                     {
                         "element_name": "3.3V max",
                         "element_bytes": "06",
-                        "is_num": true,
+                        "type": "volts",
                         "default": 0
                     },
                     {
                         "element_name": "9 V max",
                         "element_bytes": "07",
-                        "is_num": true,
+                        "type": "volts",
                         "default": 0
                     },
                     {
                         "element_name": "5 V max",
                         "element_bytes": "08",
-                        "is_num": true,
+                        "type": "volts",
                         "default": 0
                     },
                     {
                         "element_name": "12 V max ",
                         "element_bytes": "09",
-                        "is_num": true,
+                        "type": "volts",
                         "default": 0
                     },
                     {
                         "element_name": "-12 V max ",
                         "element_bytes": "0A",
-                        "is_num": true,
+                        "type": "volts",
                         "default": 0
                     },
                     {
                         "element_name": "15 V max",
                         "element_bytes": "0B",
-                        "is_num": true,
+                        "type": "volts",
                         "default": 0
                     },
                     {
                         "element_name": "-15 V max",
                         "element_bytes": "0C",
-                        "is_num": true,
+                        "type": "volts",
                         "default": 0
                     }
                 ]
@@ -83,67 +83,67 @@
                     {
                         "element_name": "2.5(1) V  max",
                         "element_bytes": "01",
-                        "is_num": true,
+                        "type": "volts",
                         "default": 0
                     },
                     {
                         "element_name": "2.5(2) V  max",
                         "element_bytes": "02",
-                        "is_num": true,
+                        "type": "volts",
                         "default": 0
                     },
                     {
                         "element_name": "3.3 V МЦО max",
                         "element_bytes": "03",
-                        "is_num": true,
+                        "type": "volts",
                         "default": 0
                     },
                     {
                         "element_name": "1.25 V max",
                         "element_bytes": "05",
-                        "is_num": true,
+                        "type": "volts",
                         "default": 0
                     },
                     {
                         "element_name": "3.3V max",
                         "element_bytes": "06",
-                        "is_num": true,
+                        "type": "volts",
                         "default": 0
                     },
                     {
                         "element_name": "9 V max",
                         "element_bytes": "07",
-                        "is_num": true,
+                        "type": "volts",
                         "default": 0
                     },
                     {
                         "element_name": "5 V max",
                         "element_bytes": "08",
-                        "is_num": true,
+                        "type": "volts",
                         "default": 0
                     },
                     {
                         "element_name": "12 V max ",
                         "element_bytes": "09",
-                        "is_num": true,
+                        "type": "volts",
                         "default": 0
                     },
                     {
                         "element_name": "-12 V max ",
                         "element_bytes": "0A",
-                        "is_num": true,
+                        "type": "volts",
                         "default": 0
                     },
                     {
                         "element_name": "15 V max",
                         "element_bytes": "0B",
-                        "is_num": true,
+                        "type": "volts",
                         "default": 0
                     },
                     {
                         "element_name": "-15 V max",
                         "element_bytes": "0C",
-                        "is_num": true,
+                        "type": "volts",
                         "default": 0
                     }
                 ]
@@ -155,67 +155,67 @@
                     {
                         "element_name": "2.5(1) V  max",
                         "element_bytes": "01",
-                        "is_num": true,
+                        "type": "volts",
                         "default": 0
                     },
                     {
                         "element_name": "2.5(2) V  max",
                         "element_bytes": "02",
-                        "is_num": true,
+                        "type": "volts",
                         "default": 0
                     },
                     {
                         "element_name": "3.3 V МЦО max",
                         "element_bytes": "03",
-                        "is_num": true,
+                        "type": "volts",
                         "default": 0
                     },
                     {
                         "element_name": "1.25 V max",
                         "element_bytes": "05",
-                        "is_num": true,
+                        "type": "volts",
                         "default": 0
                     },
                     {
                         "element_name": "3.3V max",
                         "element_bytes": "06",
-                        "is_num": true,
+                        "type": "volts",
                         "default": 0
                     },
                     {
                         "element_name": "9 V max",
                         "element_bytes": "07",
-                        "is_num": true,
+                        "type": "volts",
                         "default": 0
                     },
                     {
                         "element_name": "5 V max",
                         "element_bytes": "08",
-                        "is_num": true,
+                        "type": "volts",
                         "default": 0
                     },
                     {
                         "element_name": "12 V max ",
                         "element_bytes": "09",
-                        "is_num": true,
+                        "type": "volts",
                         "default": 0
                     },
                     {
                         "element_name": "-12 V max ",
                         "element_bytes": "0A",
-                        "is_num": true,
+                        "type": "volts",
                         "default": 0
                     },
                     {
                         "element_name": "15 V max",
                         "element_bytes": "0B",
-                        "is_num": true,
+                        "type": "volts",
                         "default": 0
                     },
                     {
                         "element_name": "-15 V max",
                         "element_bytes": "0C",
-                        "is_num": true,
+                        "type": "volts",
                         "default": 0
                     }
                 ]
@@ -234,139 +234,139 @@
                     {
                         "element_name": "2.5(1) V  max",
                         "element_bytes": "01",
-                        "is_num": true,
+                        "type": "volts",
                         "default": 2.72
                     },
                     {
                         "element_name": "2.5(2) V  max",
                         "element_bytes": "02",
-                        "is_num": true,
+                        "type": "volts",
                         "default": 2.61
                     },
                     {
                         "element_name": "3.3 V МЦО max",
                         "element_bytes": "03",
-                        "is_num": true,
+                        "type": "volts",
                         "default": 2.18
                     },
                     {
                         "element_name": "1.25 V max",
                         "element_bytes": "05",
-                        "is_num": true,
+                        "type": "volts",
                         "default": 1.33
                     },
                     {
                         "element_name": "3.3V max",
                         "element_bytes": "06",
-                        "is_num": true,
+                        "type": "volts",
                         "default": 2.17
                     },
                     {
                         "element_name": "9 V max",
                         "element_bytes": "07",
-                        "is_num": true,
+                        "type": "volts",
                         "default": 2.11
                     },
                     {
                         "element_name": "5 V max",
                         "element_bytes": "08",
-                        "is_num": true,
+                        "type": "volts",
                         "default": 2.02
                     },
                     {
                         "element_name": "12 V max ",
                         "element_bytes": "09",
-                        "is_num": true,
+                        "type": "volts",
                         "default": 2.11
                     },
                     {
                         "element_name": "-12 V max ",
                         "element_bytes": "0A",
-                        "is_num": true,
+                        "type": "volts",
                         "default": 2.11
                     },
                     {
                         "element_name": "15 V max",
                         "element_bytes": "0B",
-                        "is_num": true,
+                        "type": "volts",
                         "default": 2.15
                     },
                     {
                         "element_name": "-15 V max",
                         "element_bytes": "0C",
-                        "is_num": true,
+                        "type": "volts",
                         "default": 2.17
                     }
                 ]
             },
             {
                 "group_name": "Минимальное значение",
-                "group_bytes": "09",
+                "group_bytes": "52",
                 "elements": [
                     {
                         "element_name": "2.5(1) V  max",
                         "element_bytes": "01",
-                        "is_num": true,
+                        "type": "volts",
                         "default": 2.22
                     },
                     {
                         "element_name": "2.5(2) V  max",
                         "element_bytes": "02",
-                        "is_num": true,
+                        "type": "volts",
                         "default": 2.14
                     },
                     {
                         "element_name": "3.3 V МЦО max",
                         "element_bytes": "03",
-                        "is_num": true,
+                        "type": "volts",
                         "default": 1.78
                     },
                     {
                         "element_name": "1.25 V max",
                         "element_bytes": "05",
-                        "is_num": true,
+                        "type": "volts",
                         "default": 1.09
                     },
                     {
                         "element_name": "3.3V max",
                         "element_bytes": "06",
-                        "is_num": true,
+                        "type": "volts",
                         "default": 1.78
                     },
                     {
                         "element_name": "9 V max",
                         "element_bytes": "07",
-                        "is_num": true,
+                        "type": "volts",
                         "default": 1.73
                     },
                     {
                         "element_name": "5 V max",
                         "element_bytes": "08",
-                        "is_num": true,
+                        "type": "volts",
                         "default": 1.65
                     },
                     {
                         "element_name": "12 V max ",
                         "element_bytes": "09",
-                        "is_num": true,
+                        "type": "volts",
                         "default": 1.73
                     },
                     {
                         "element_name": "-12 V max ",
                         "element_bytes": "0A",
-                        "is_num": true,
+                        "type": "volts",
                         "default": 1.72
                     },
                     {
                         "element_name": "15 V max",
                         "element_bytes": "0B",
-                        "is_num": true,
+                        "type": "volts",
                         "default": 1.75
                     },
                     {
                         "element_name": "-15 V max",
                         "element_bytes": "0C",
-                        "is_num": true,
+                        "type": "volts",
                         "default": 1.78
                     }
                 ]
@@ -385,68 +385,68 @@
                     {
                         "element_name": "Версия ПМО",
                         "element_bytes": "01",
-                        "is_num": true,
-                        "default": 0
+                        "type": "hex",
+                        "default": "0000"
                     },
                     {
                         "element_name": "Дата ПМО",
                         "element_bytes": "02",
-                        "is_num": false,
-                        "default": "00.00.0000"
+                        "type": "date",
+                        "default": "00.00.00"
                     },
                     {
                         "element_name": "КС ПМО 1",
                         "element_bytes": "03",
-                        "is_num": true,
-                        "default": 0
+                        "type": "hex",
+                        "default": "0000"
                     },
                     {
                         "element_name": "КС ПМО 2",
                         "element_bytes": "04",
-                        "is_num": true,
-                        "default": 0
+                        "type": "hex",
+                        "default": "0000"
                     },
                     {
                         "element_name": "КС ПМО 3",
                         "element_bytes": "05",
-                        "is_num": true,
-                        "default": 0
+                        "type": "hex",
+                        "default": "0000"
                     },
                     {
                         "element_name": "КС ПМО 4",
                         "element_bytes": "06",
-                        "is_num": true,
-                        "default": 0
+                        "type": "hex",
+                        "default": "0000"
                     },
                     {
                         "element_name": "КС ПМО 5",
                         "element_bytes": "07",
-                        "is_num": true,
-                        "default": 0
+                        "type": "hex",
+                        "default": "0000"
                     },
                     {
                         "element_name": "КС ПМО 6",
                         "element_bytes": "08",
-                        "is_num": true,
-                        "default": 0
+                        "type": "hex",
+                        "default": "0000"
                     },
                     {
                         "element_name": "КС ПМО 7",
                         "element_bytes": "09",
-                        "is_num": true,
-                        "default": 0
+                        "type": "hex",
+                        "default": "0000"
                     },
                     {
                         "element_name": "КС ПМО 8",
                         "element_bytes": "0A",
-                        "is_num": true,
-                        "default": 0
+                        "type": "hex",
+                        "default": "0000"
                     },
                     {
                         "element_name": "Серийный №",
                         "element_bytes": "0B",
-                        "is_num": true,
-                        "default": 0
+                        "type": "hex",
+                        "default": "0000"
                     }
                 ]
             }
@@ -464,68 +464,68 @@
                     {
                         "element_name": "Версия ПМО",
                         "element_bytes": "01",
-                        "is_num": true,
-                        "default": 0
+                        "type": "hex",
+                        "default": "0000"
                     },
                     {
                         "element_name": "Дата ПМО",
                         "element_bytes": "02",
-                        "is_num": false,
-                        "default": "02.09.2017"
+                        "type": "date",
+                        "default": "02.09.17"
                     },
                     {
                         "element_name": "КС ПМО 1",
                         "element_bytes": "03",
-                        "is_num": true,
-                        "default": 0
+                        "type": "hex",
+                        "default": "0000"
                     },
                     {
                         "element_name": "КС ПМО 2",
                         "element_bytes": "04",
-                        "is_num": true,
-                        "default": 0
+                        "type": "hex",
+                        "default": "0000"
                     },
                     {
                         "element_name": "КС ПМО 3",
                         "element_bytes": "05",
-                        "is_num": true,
-                        "default": 0
+                        "type": "hex",
+                        "default": "0000"
                     },
                     {
                         "element_name": "КС ПМО 4",
                         "element_bytes": "06",
-                        "is_num": true,
-                        "default": 0
+                        "type": "hex",
+                        "default": "0000"
                     },
                     {
                         "element_name": "КС ПМО 5",
                         "element_bytes": "07",
-                        "is_num": true,
-                        "default": 0
+                        "type": "hex",
+                        "default": "0000"
                     },
                     {
                         "element_name": "КС ПМО 6",
                         "element_bytes": "08",
-                        "is_num": true,
-                        "default": 0
+                        "type": "hex",
+                        "default": "0000"
                     },
                     {
                         "element_name": "КС ПМО 7",
                         "element_bytes": "09",
-                        "is_num": true,
-                        "default": 0
+                        "type": "hex",
+                        "default": "0000"
                     },
                     {
                         "element_name": "КС ПМО 8",
                         "element_bytes": "0A",
-                        "is_num": true,
-                        "default": 0
+                        "type": "hex",
+                        "default": "0000"
                     },
                     {
                         "element_name": "Серийный №",
                         "element_bytes": "0B",
-                        "is_num": true,
-                        "default": 0
+                        "type": "hex",
+                        "default": "0000"
                     }
                 ]
             }
@@ -543,20 +543,20 @@
                     {
                         "element_name": "Значение курса",
                         "element_bytes": "55",
-                        "is_num": true,
-                        "default": 0
+                        "type": "hex",
+                        "default": "0000"
                     },
                     {
                         "element_name": "Значение крена",
                         "element_bytes": "56",
-                        "is_num": true,
-                        "default": 0
+                        "type": "hex",
+                        "default": "0000"
                     },
                     {
                         "element_name": "Значение тангажа",
                         "element_bytes": "57",
-                        "is_num": true,
-                        "default": 0
+                        "type": "hex",
+                        "default": "0000"
                     }
                 ]
             }
@@ -574,20 +574,20 @@
                     {
                         "element_name": "Значение курса",
                         "element_bytes": "55",
-                        "is_num": true,
-                        "default": 0
+                        "type": "hex",
+                        "default": "0000"
                     },
                     {
                         "element_name": "Значение крена",
                         "element_bytes": "56",
-                        "is_num": true,
-                        "default": 0
+                        "type": "hex",
+                        "default": "0000"
                     },
                     {
                         "element_name": "Значение тангажа",
                         "element_bytes": "57",
-                        "is_num": true,
-                        "default": 0
+                        "type": "hex",
+                        "default": "0000"
                     }
                 ]
             }

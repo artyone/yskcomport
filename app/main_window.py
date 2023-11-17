@@ -6,10 +6,10 @@ from PyQt6.QtGui import (QColor, QIcon, QMoveEvent, QResizeEvent,
                          QTextCharFormat, QTextCursor)
 from PyQt6.QtSerialPort import QSerialPort, QSerialPortInfo
 from PyQt6.QtWidgets import (QApplication, QComboBox, QHBoxLayout, QMainWindow,
-                             QMessageBox, QPlainTextEdit, QPushButton,
-                             QSplitter, QVBoxLayout, QWidget, QProgressBar)
+                             QMessageBox, QPlainTextEdit, QProgressBar,
+                             QPushButton, QSplitter, QVBoxLayout, QWidget)
 
-from .controller import Controller
+from .controller import AnswerException, Controller
 from .tab_widgets import TabWidget
 
 
@@ -79,7 +79,6 @@ class MainWindow(QMainWindow):
 
         self.tabs.block_buttons(True)
 
-
     def resizeEvent(self, a0: QResizeEvent | None) -> None:
         self.settings.setValue('geometry', self.saveGeometry())
         return super().resizeEvent(a0)
@@ -107,13 +106,14 @@ class MainWindow(QMainWindow):
             self.serial_port.write(command)
             self.current_index += 1
             self.progress_bar.setValue(self.current_index)
-            self.set_console_text(f'Команда отправлена: {self.command_byte_to_str(command)}')
+            self.set_console_text(
+                f'Команда отправлена: {self.command_byte_to_str(command)}')
         else:
             self.timer.stop()
             self.block_all_elements(False)
             self.set_console_text(f'Команд отправлено: {len(self.commands)}')
             self.progress_bar.deleteLater()
-    
+
     def block_all_elements(self, value: bool):
         self.open_port_button.setDisabled(value)
         self.close_port_button.setDisabled(value)
@@ -123,9 +123,10 @@ class MainWindow(QMainWindow):
     @staticmethod
     def command_byte_to_str(command: bytes):
         formatted_command = command.hex().upper()
-        formatted_command = ' '.join([formatted_command[i:i + 2] for i in range(0, len(formatted_command), 2)])
+        formatted_command = ' '.join(
+            [formatted_command[i:i + 2] for i in range(0, len(formatted_command), 2)])
         return formatted_command
-    
+
     def send_apply_command(self):
         if not self.serial_port.isOpen():
             self.set_console_text('Необходимо открыть порт', 'error')
@@ -136,8 +137,15 @@ class MainWindow(QMainWindow):
 
     def read_data(self):
         data = self.serial_port.readAll()
-        self.set_console_text(f"Приняты данные: {self.command_byte_to_str(data.data())}")
-        self.ctrl.get_element_from_answer(data).widget.update_data()
+        self.set_console_text(
+            f"Приняты данные: {self.command_byte_to_str(data.data())}")
+        try:
+            widget = self.ctrl.get_element_from_answer(data)
+        except AnswerException:
+            self.set_console_text('В ответ пришло не 53 08 41', 'error')
+            return
+        if widget:
+            widget.update_data()
 
     def restart_app(self) -> None:
         program = sys.executable
