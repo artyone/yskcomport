@@ -1,11 +1,11 @@
 import sys
 
-from PyQt6.QtCore import (QCoreApplication, QIODevice, QProcess, QSettings,
+from PyQt5.QtCore import (QCoreApplication, QIODevice, QProcess, QSettings,
                           QTime, QTimer)
-from PyQt6.QtGui import (QColor, QIcon, QMoveEvent, QResizeEvent,
+from PyQt5.QtGui import (QColor, QIcon, QMoveEvent, QResizeEvent,
                          QTextCharFormat, QTextCursor)
-from PyQt6.QtSerialPort import QSerialPort, QSerialPortInfo
-from PyQt6.QtWidgets import (QApplication, QComboBox, QHBoxLayout, QMainWindow,
+from PyQt5.QtSerialPort import QSerialPort, QSerialPortInfo
+from PyQt5.QtWidgets import (QApplication, QComboBox, QHBoxLayout, QMainWindow,
                              QMessageBox, QPlainTextEdit, QProgressBar,
                              QPushButton, QSplitter, QVBoxLayout, QWidget)
 
@@ -28,8 +28,8 @@ class MainWindow(QMainWindow):
         geometry = self.settings.value('geometry')
         self.restoreGeometry(geometry)
 
-        self.app.setWindowIcon(QIcon('resource/vise-drawer.png'))
-        self.setWindowTitle('YSK, ver. 24.11.17')
+        self.app.setWindowIcon(QIcon('icon.ico'))
+        self.setWindowTitle('YSK, ver. 24.11.20')
 
         self.serial_port = QSerialPort(self)
         self.serial_port.readyRead.connect(self.read_data)
@@ -42,7 +42,7 @@ class MainWindow(QMainWindow):
                 Controller.generate_json()
                 self.ctrl = Controller(self)
             else:
-                exit()
+                sys.exit()
 
         self.initUI()
 
@@ -51,7 +51,7 @@ class MainWindow(QMainWindow):
         self.setCentralWidget(main_widget)
         self.main_layout = QVBoxLayout(main_widget)
 
-        self.port_combobox = QComboBox(self)
+        self.port_combobox = PortComboBox(self)
         self.main_layout.addWidget(self.port_combobox)
         self.update_port_list()
         self.port_combobox.currentIndexChanged.connect(self.close_serial_port)
@@ -79,11 +79,11 @@ class MainWindow(QMainWindow):
 
         self.tabs.block_buttons(True)
 
-    def resizeEvent(self, a0: QResizeEvent | None) -> None:
+    def resizeEvent(self, a0) -> None:
         self.settings.setValue('geometry', self.saveGeometry())
         return super().resizeEvent(a0)
 
-    def moveEvent(self, a0: QMoveEvent | None) -> None:
+    def moveEvent(self, a0) -> None:
         self.settings.setValue('geometry', self.saveGeometry())
         return super().moveEvent(a0)
 
@@ -91,8 +91,10 @@ class MainWindow(QMainWindow):
         if not self.serial_port.isOpen():
             self.set_console_text('Необходимо открыть порт', 'error')
             return
+
         self.commands = self.ctrl.get_data_for_temp_memory(widget_datas)
         self.current_index = 0
+
         self.progress_bar = QProgressBar()
         self.progress_bar.setMaximum(len(self.commands))
         self.main_layout.addWidget(self.progress_bar)
@@ -101,18 +103,18 @@ class MainWindow(QMainWindow):
         self.timer.start(50)
 
     def send_next_command(self):
-        if self.current_index < len(self.commands):
-            command = self.commands[self.current_index]
-            self.serial_port.write(command)
-            self.current_index += 1
-            self.progress_bar.setValue(self.current_index)
-            self.set_console_text(
-                f'Команда отправлена: {self.command_byte_to_str(command)}')
-        else:
+        if self.current_index >= len(self.commands):
             self.timer.stop()
             self.block_all_elements(False)
             self.set_console_text(f'Команд отправлено: {len(self.commands)}')
             self.progress_bar.deleteLater()
+            return
+
+        command = self.commands[self.current_index]
+        self.serial_port.write(command)
+        self.current_index += 1
+        self.progress_bar.setValue(self.current_index)
+        self.set_console_text(f'Команда отправлена: {self.command_byte_to_str(command)}')
 
     def block_all_elements(self, value: bool):
         self.open_port_button.setDisabled(value)
@@ -122,9 +124,7 @@ class MainWindow(QMainWindow):
 
     @staticmethod
     def command_byte_to_str(command: bytes):
-        formatted_command = command.hex().upper()
-        formatted_command = ' '.join(
-            [formatted_command[i:i + 2] for i in range(0, len(formatted_command), 2)])
+        formatted_command = ' '.join([command.hex().upper()[i:i+2] for i in range(0, len(command.hex()), 2)])
         return formatted_command
 
     def send_apply_command(self):
@@ -154,8 +154,8 @@ class MainWindow(QMainWindow):
 
     def show_message_box(self, message: str) -> bool:
         reply = QMessageBox.question(self, 'Предупреждение', message,
-                                     QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
-                                     QMessageBox.StandardButton.Yes)
+                                     QMessageBox.Yes | QMessageBox.No,
+                                     QMessageBox.Yes)
 
         if reply == QMessageBox.StandardButton.Yes:
             return True
@@ -164,6 +164,7 @@ class MainWindow(QMainWindow):
 
     def update_port_list(self):
         self.port_list = QSerialPortInfo.availablePorts()
+        self.port_combobox.clear()
         self.port_combobox.addItems(
             [f'{port.description()} ({port.portName()})' for port in self.port_list])
 
@@ -191,7 +192,7 @@ class MainWindow(QMainWindow):
             self.serial_port.close()
             self.set_console_text(
                 f"Порт {self.serial_port.portName()} закрыт.")
-            self.tabs.block_buttons(True)
+        self.tabs.block_buttons(True)
 
     def set_console_text(self, text: str, type='info'):
         current_time = QTime.currentTime().toString("hh:mm:zzz")
@@ -207,3 +208,17 @@ class MainWindow(QMainWindow):
         self.console_widget.setTextCursor(cursor)
 
         self.console_widget.ensureCursorVisible()
+    
+    def close(self):
+        self.close_serial_port()
+        return super().close()
+    
+
+class PortComboBox(QComboBox):
+    def __init__(self, parent, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.parent = parent
+
+    def showPopup(self) -> None:
+        self.parent.update_port_list()
+        return super().showPopup()

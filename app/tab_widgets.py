@@ -1,8 +1,8 @@
 from datetime import datetime
 
-from PyQt6.QtCore import Qt
-from PyQt6.QtGui import QPalette
-from PyQt6.QtWidgets import (QFormLayout, QGroupBox, QHBoxLayout, QLabel,
+from PyQt5.QtCore import Qt
+from PyQt5.QtGui import QPalette
+from PyQt5.QtWidgets import (QFormLayout, QGroupBox, QHBoxLayout, QLabel,
                              QLineEdit, QPushButton, QTabWidget, QVBoxLayout,
                              QWidget)
 

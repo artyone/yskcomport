@@ -4,8 +4,6 @@ import time
 from dataclasses import dataclass
 from typing import Any
 
-# from json_data import get_default_json_data, get_json_schema
-from icecream import ic
 from jsonschema import validate
 
 from .json_data import get_default_json_data, get_json_schema
@@ -29,7 +27,7 @@ class ElementData:
     element_name: str
     element_bytes: str
     type: str
-    data: str | float
+    data: Any
     widget: Any = None
 
 
@@ -127,7 +125,7 @@ class Controller:
             number = 65535
         byte1 = (number >> 8) & 0xFF
         byte2 = number & 0xFF
-        return [byte1, byte2]
+        return byte1, byte2
 
     @staticmethod
     def date_to_int(date):
@@ -136,7 +134,7 @@ class Controller:
         day, month, year = [int(i) for i in date.split('.')]
         result = f'{year:07b}{month:04b}{day:05b}'
         byte1, byte2 = int(result[:8], 2), int(result[8:], 2)
-        return [byte1, byte2]
+        return byte1, byte2
 
     @staticmethod
     def hex_to_date(bytes_data):
@@ -221,8 +219,7 @@ class Controller:
         for element in self._data:
             if element.group_bytes == group_bytes and element.element_bytes == element_bytes:
                 if element.type == 'volts':
-                    from random import randint
-                    element.data = randint(0, 25)
+                    element.data = self.int_to_volts(int(element_data, 16))
                 elif element.type == 'date':
                     element.data = self.hex_to_date(element_data)
                 else:
