@@ -152,7 +152,7 @@ class GroupBoxesWidget(QWidget):
         self.ctrl = ctrl
         self.category = category
         self.main_window = self.ctrl.parent
-        self.widgets = []
+        self.widgets: list[GroupBox] = []
         self.initUI()
 
     def initUI(self):
@@ -198,7 +198,7 @@ class TabWidget(QTabWidget):
     def __init__(self, *args, ctrl: Controller, **kwargs):
         super().__init__(*args, **kwargs)
         self.ctrl = ctrl
-        self.widgets = []
+        self.widgets: list[GroupBoxesWidget] = []
         self.initUI()
 
     def initUI(self):

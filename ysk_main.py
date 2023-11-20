@@ -6,11 +6,11 @@ from app import MainWindow
 
 
 def main() -> None:
-    with QApplication(sys.argv) as app:
-        main_window = MainWindow(app=app)
-        main_window.show()
-        app.exec()
-
+    app = QApplication(sys.argv)
+    app.setStyle('Fusion')
+    main_window = MainWindow(app=app)
+    main_window.show()
+    app.exec_()
 
 if __name__ == '__main__':
     main()

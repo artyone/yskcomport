@@ -210,7 +210,7 @@ class Controller:
         bytes_data = message.toHex().data().decode('utf-8').upper()
         main_bytes = bytes_data[:6]
         if main_bytes != '530841':
-            raise AnswerException
+            raise AnswerException('Первые три байта в пакете должны быть 53 08 41')
 
         group_bytes = bytes_data[6:8]
         element_bytes = bytes_data[8:10]
@@ -225,7 +225,7 @@ class Controller:
                 else:
                     element.data = element_data
                 return element.widget
-        return None
+        raise AnswerException('Не удалось распознать команду')
 
 
 if __name__ == '__main__':

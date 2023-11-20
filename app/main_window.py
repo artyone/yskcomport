@@ -1,9 +1,8 @@
 import sys
 
 from PyQt5.QtCore import (QCoreApplication, QIODevice, QProcess, QSettings,
-                          QTime, QTimer)
-from PyQt5.QtGui import (QColor, QIcon, QMoveEvent, QResizeEvent,
-                         QTextCharFormat, QTextCursor)
+                          QTime, QTimer, QByteArray)
+from PyQt5.QtGui import QColor, QIcon, QTextCharFormat, QTextCursor
 from PyQt5.QtSerialPort import QSerialPort, QSerialPortInfo
 from PyQt5.QtWidgets import (QApplication, QComboBox, QHBoxLayout, QMainWindow,
                              QMessageBox, QPlainTextEdit, QProgressBar,
@@ -33,6 +32,7 @@ class MainWindow(QMainWindow):
 
         self.serial_port = QSerialPort(self)
         self.serial_port.readyRead.connect(self.read_data)
+        self.buffer_answer = QByteArray()
 
         try:
             self.ctrl = Controller(self)
@@ -114,7 +114,8 @@ class MainWindow(QMainWindow):
         self.serial_port.write(command)
         self.current_index += 1
         self.progress_bar.setValue(self.current_index)
-        self.set_console_text(f'Команда отправлена: {self.command_byte_to_str(command)}')
+        self.set_console_text(
+            f'Команда отправлена: {self.command_byte_to_str(command)}')
 
     def block_all_elements(self, value: bool):
         self.open_port_button.setDisabled(value)
@@ -124,7 +125,8 @@ class MainWindow(QMainWindow):
 
     @staticmethod
     def command_byte_to_str(command: bytes):
-        formatted_command = ' '.join([command.hex().upper()[i:i+2] for i in range(0, len(command.hex()), 2)])
+        formatted_command = ' '.join(
+            [command.hex().upper()[i:i+2] for i in range(0, len(command.hex()), 2)])
         return formatted_command
 
     def send_apply_command(self):
@@ -136,16 +138,30 @@ class MainWindow(QMainWindow):
         self.set_console_text(f'Команда записать в Eeprom отправлена.')
 
     def read_data(self):
-        data = self.serial_port.readAll()
-        self.set_console_text(
-            f"Приняты данные: {self.command_byte_to_str(data.data())}")
-        try:
-            widget = self.ctrl.get_element_from_answer(data)
-        except AnswerException:
-            self.set_console_text('В ответ пришло не 53 08 41', 'error')
-            return
-        if widget:
+        while self.serial_port.waitForReadyRead(50):
+            data = self.serial_port.readAll()
+            self.set_console_text(
+                f"Приняты данные: {self.command_byte_to_str(data.data())}")
+            data = self.check_answer(data)
+            if data is None:
+                continue
+            try:
+                widget = self.ctrl.get_element_from_answer(data)
+            except AnswerException as e:
+                self.set_console_text(str(e), 'error')
+                continue
             widget.update_data()
+
+
+    def check_answer(self, answer):
+        if len(answer) == 8:
+            return answer
+        self.buffer_answer += answer
+        if len(self.buffer_answer) >= 8:
+            result = self.buffer_answer[:8]
+            self.buffer_answer = self.buffer_answer[8:]
+            return result
+        return None
 
     def restart_app(self) -> None:
         program = sys.executable
@@ -208,11 +224,11 @@ class MainWindow(QMainWindow):
         self.console_widget.setTextCursor(cursor)
 
         self.console_widget.ensureCursorVisible()
-    
+
     def close(self):
         self.close_serial_port()
         return super().close()
-    
+
 
 class PortComboBox(QComboBox):
     def __init__(self, parent, *args, **kwargs):
