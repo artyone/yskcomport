@@ -2,8 +2,8 @@ from datetime import datetime
 
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPalette
-from PyQt5.QtWidgets import (QFormLayout, QGroupBox, QHBoxLayout, QLabel,
-                             QLineEdit, QPushButton, QTabWidget, QVBoxLayout,
+from PyQt5.QtWidgets import (QGroupBox, QHBoxLayout, QLabel, QLineEdit,
+                             QPushButton, QTabWidget, QToolTip, QVBoxLayout,
                              QWidget)
 
 from .controller import Controller, ElementData
@@ -13,20 +13,14 @@ class LineWidget(QWidget):
     def __init__(self,
                  *args,
                  ctrl: Controller,
-                 category_name: str,
-                 group_name: str,
-                 element_name: str,
+                 element_data: ElementData,
                  **kwargs) -> None:
         super().__init__(*args, **kwargs)
         self.ctrl = ctrl
-        self.category_name = category_name
-        self.group_name = group_name
-        self.element_name = element_name
+        self.element: ElementData = element_data
+
         self.default_palette_color = self.palette().color(QPalette.ColorRole.Text)
 
-        self.element: ElementData = self.ctrl.get_element_data(
-            self.category_name, self.group_name, self.element_name
-        )
         if self.element.widget is None:
             self.element.widget = self
 
@@ -40,9 +34,9 @@ class LineWidget(QWidget):
         font.setBold(False)
         self.setFont(font)
 
-        label = QLabel(self.element.element_name)
-        label.setMinimumWidth(100)
-        label.setAlignment(Qt.AlignmentFlag.AlignRight)
+        self.label = QLabel(self.element.element_name)
+        self.label.setMinimumWidth(100)
+        self.label.setAlignment(Qt.AlignmentFlag.AlignRight)
         self.input_widget = QLineEdit(str(self.element.data))
         self.input_widget.setEnabled(self.element.is_input)
 
@@ -52,8 +46,15 @@ class LineWidget(QWidget):
             self.input_widget.textChanged.connect(self.is_data)
         else:
             self.input_widget.textChanged.connect(self.is_hex)
-        layout.addWidget(label)
+        layout.addWidget(self.label)
         layout.addWidget(self.input_widget)
+
+        if self.element.type == 'volts':
+            self.convert_input_widget = QLineEdit(
+                str(self.ctrl.volts_to_int(self.element.data))
+            )
+            self.convert_input_widget.setEnabled(False)
+            layout.addWidget(self.convert_input_widget)
 
     def get_input_data(self):
         self.element.data = self.input_widget.text()
@@ -61,6 +62,7 @@ class LineWidget(QWidget):
 
     def is_data(self):
         new_date = self.input_widget.text()
+        new_date = new_date.replace(',', '.')
         try:
             date_format = "%d.%m.%y"
             datetime.strptime(new_date, date_format)
@@ -72,10 +74,11 @@ class LineWidget(QWidget):
 
     def is_num(self):
         try:
-            new_data = float(self.input_widget.text())
+            new_data = float(self.input_widget.text().replace(',', '.'))
             num = self.ctrl.volts_to_int(new_data)
             if num < 0 or num > 65535:
                 raise ValueError
+            self.convert_input_widget.setText(str(num))
         except:
             self.set_red_widget_border_color(True)
         else:
@@ -84,6 +87,9 @@ class LineWidget(QWidget):
 
     def is_hex(self):
         try:
+            text = self.input_widget.text()
+            if len(text) != 4:
+                raise ValueError
             new_data = int(self.input_widget.text(), base=16)
             if new_data < 0 or new_data > 65535:
                 raise ValueError
@@ -96,6 +102,14 @@ class LineWidget(QWidget):
     def set_red_widget_border_color(self, param):
         border = "QLineEdit { border: 1px solid red; }" if param else ''
         self.input_widget.setStyleSheet(border)
+        if param and self.element.tooltip:
+            QToolTip.showText(
+                self.input_widget.mapToGlobal(
+                    self.input_widget.rect().bottomLeft()),
+                self.element.tooltip
+            )
+        else:
+            QToolTip.hideText()
         self.ctrl.parent.tabs.block_buttons(param)
 
     def update_data(self):
@@ -126,16 +140,34 @@ class GroupBox(QGroupBox):
         self.setFont(font)
         self.setTitle(self.group_name)
 
-        layout = QFormLayout(self)
+        layout = QVBoxLayout(self)
+        layout.setAlignment(Qt.AlignmentFlag.AlignTop)
 
-        for element in self.ctrl.get_element_names(self.category_name, self.group_name):
+        headers_layout = QHBoxLayout()
+        layout.addLayout(headers_layout)
+        label_name = QLabel('Элемент')
+        label_value = QLabel('Значение')
+
+        headers_layout.addWidget(label_name)
+        headers_layout.addWidget(label_value)
+
+        for element_name in self.ctrl.get_element_names(self.category_name, self.group_name):
+            element_data = self.ctrl.get_element_data(
+                self.category_name, self.group_name, element_name
+            )
             line_widget = LineWidget(
                 ctrl=self.ctrl,
-                category_name=self.category_name,
-                group_name=self.group_name,
-                element_name=element
+                element_data=element_data
             )
-            layout.addRow(line_widget)
+            if element_data.type == 'cs':
+                try:
+                    sub_line_layout.addWidget(line_widget)
+                except:
+                    sub_line_layout = QHBoxLayout()
+                    layout.addLayout(sub_line_layout)
+                    sub_line_layout.addWidget(line_widget)
+            else:
+                layout.addWidget(line_widget)
             self.widgets.append(line_widget)
 
     def get_data_from_widgets(self):

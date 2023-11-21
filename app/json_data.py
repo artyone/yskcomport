@@ -13,66 +13,77 @@ def get_default_json_data():
                             "element_name": "2.5(1) V  max",
                             "element_bytes": "01",
                             "type": "volts",
+                            "tooltip": "Доспустимые значения от 0 до 52.79 В",
                             "default": 0
                         },
                         {
                             "element_name": "2.5(2) V  max",
                             "element_bytes": "02",
                             "type": "volts",
+                            "tooltip": "Доспустимые значения от 0 до 52.79 В",
                             "default": 0
                         },
                         {
                             "element_name": "3.3 V МЦО max",
                             "element_bytes": "03",
                             "type": "volts",
+                            "tooltip": "Доспустимые значения от 0 до 52.79 В",
                             "default": 0
                         },
                         {
                             "element_name": "1.25 V max",
                             "element_bytes": "05",
                             "type": "volts",
+                            "tooltip": "Доспустимые значения от 0 до 52.79 В",
                             "default": 0
                         },
                         {
                             "element_name": "3.3V max",
                             "element_bytes": "06",
                             "type": "volts",
+                            "tooltip": "Доспустимые значения от 0 до 52.79 В",
                             "default": 0
                         },
                         {
                             "element_name": "9 V max",
                             "element_bytes": "07",
                             "type": "volts",
+                            "tooltip": "Доспустимые значения от 0 до 52.79 В",
                             "default": 0
                         },
                         {
                             "element_name": "5 V max",
                             "element_bytes": "08",
                             "type": "volts",
+                            "tooltip": "Доспустимые значения от 0 до 52.79 В",
                             "default": 0
                         },
                         {
                             "element_name": "12 V max ",
                             "element_bytes": "09",
                             "type": "volts",
+                            "tooltip": "Доспустимые значения от 0 до 52.79 В",
                             "default": 0
                         },
                         {
                             "element_name": "-12 V max ",
                             "element_bytes": "0A",
                             "type": "volts",
+                            "tooltip": "Доспустимые значения от 0 до 52.79 В",
                             "default": 0
                         },
                         {
                             "element_name": "15 V max",
                             "element_bytes": "0B",
                             "type": "volts",
+                            "tooltip": "Доспустимые значения от 0 до 52.79 В",
                             "default": 0
                         },
                         {
                             "element_name": "-15 V max",
                             "element_bytes": "0C",
                             "type": "volts",
+                            "tooltip": "Доспустимые значения от 0 до 52.79 В",
                             "default": 0
                         }
                     ]
@@ -85,66 +96,77 @@ def get_default_json_data():
                             "element_name": "2.5(1) V  max",
                             "element_bytes": "01",
                             "type": "volts",
+                            "tooltip": "Доспустимые значения от 0 до 52.79 В",
                             "default": 0
                         },
                         {
                             "element_name": "2.5(2) V  max",
                             "element_bytes": "02",
                             "type": "volts",
+                            "tooltip": "Доспустимые значения от 0 до 52.79 В",
                             "default": 0
                         },
                         {
                             "element_name": "3.3 V МЦО max",
                             "element_bytes": "03",
                             "type": "volts",
+                            "tooltip": "Доспустимые значения от 0 до 52.79 В",
                             "default": 0
                         },
                         {
                             "element_name": "1.25 V max",
                             "element_bytes": "05",
                             "type": "volts",
+                            "tooltip": "Доспустимые значения от 0 до 52.79 В",
                             "default": 0
                         },
                         {
                             "element_name": "3.3V max",
                             "element_bytes": "06",
                             "type": "volts",
+                            "tooltip": "Доспустимые значения от 0 до 52.79 В",
                             "default": 0
                         },
                         {
                             "element_name": "9 V max",
                             "element_bytes": "07",
                             "type": "volts",
+                            "tooltip": "Доспустимые значения от 0 до 52.79 В",
                             "default": 0
                         },
                         {
                             "element_name": "5 V max",
                             "element_bytes": "08",
                             "type": "volts",
+                            "tooltip": "Доспустимые значения от 0 до 52.79 В",
                             "default": 0
                         },
                         {
                             "element_name": "12 V max ",
                             "element_bytes": "09",
                             "type": "volts",
+                            "tooltip": "Доспустимые значения от 0 до 52.79 В",
                             "default": 0
                         },
                         {
                             "element_name": "-12 V max ",
                             "element_bytes": "0A",
                             "type": "volts",
+                            "tooltip": "Доспустимые значения от 0 до 52.79 В",
                             "default": 0
                         },
                         {
                             "element_name": "15 V max",
                             "element_bytes": "0B",
                             "type": "volts",
+                            "tooltip": "Доспустимые значения от 0 до 52.79 В",
                             "default": 0
                         },
                         {
                             "element_name": "-15 V max",
                             "element_bytes": "0C",
                             "type": "volts",
+                            "tooltip": "Доспустимые значения от 0 до 52.79 В",
                             "default": 0
                         }
                     ]
@@ -157,66 +179,77 @@ def get_default_json_data():
                             "element_name": "2.5(1) V  max",
                             "element_bytes": "01",
                             "type": "volts",
+                            "tooltip": "Доспустимые значения от 0 до 52.79 В",
                             "default": 0
                         },
                         {
                             "element_name": "2.5(2) V  max",
                             "element_bytes": "02",
                             "type": "volts",
+                            "tooltip": "Доспустимые значения от 0 до 52.79 В",
                             "default": 0
                         },
                         {
                             "element_name": "3.3 V МЦО max",
                             "element_bytes": "03",
                             "type": "volts",
+                            "tooltip": "Доспустимые значения от 0 до 52.79 В",
                             "default": 0
                         },
                         {
                             "element_name": "1.25 V max",
                             "element_bytes": "05",
                             "type": "volts",
+                            "tooltip": "Доспустимые значения от 0 до 52.79 В",
                             "default": 0
                         },
                         {
                             "element_name": "3.3V max",
                             "element_bytes": "06",
                             "type": "volts",
+                            "tooltip": "Доспустимые значения от 0 до 52.79 В",
                             "default": 0
                         },
                         {
                             "element_name": "9 V max",
                             "element_bytes": "07",
                             "type": "volts",
+                            "tooltip": "Доспустимые значения от 0 до 52.79 В",
                             "default": 0
                         },
                         {
                             "element_name": "5 V max",
                             "element_bytes": "08",
                             "type": "volts",
+                            "tooltip": "Доспустимые значения от 0 до 52.79 В",
                             "default": 0
                         },
                         {
                             "element_name": "12 V max ",
                             "element_bytes": "09",
                             "type": "volts",
+                            "tooltip": "Доспустимые значения от 0 до 52.79 В",
                             "default": 0
                         },
                         {
                             "element_name": "-12 V max ",
                             "element_bytes": "0A",
                             "type": "volts",
+                            "tooltip": "Доспустимые значения от 0 до 52.79 В",
                             "default": 0
                         },
                         {
                             "element_name": "15 V max",
                             "element_bytes": "0B",
                             "type": "volts",
+                            "tooltip": "Доспустимые значения от 0 до 52.79 В",
                             "default": 0
                         },
                         {
                             "element_name": "-15 V max",
                             "element_bytes": "0C",
                             "type": "volts",
+                            "tooltip": "Доспустимые значения от 0 до 52.79 В",
                             "default": 0
                         }
                     ]
@@ -236,66 +269,77 @@ def get_default_json_data():
                             "element_name": "2.5(1) V  max",
                             "element_bytes": "01",
                             "type": "volts",
+                            "tooltip": "Доспустимые значения от 0 до 52.79 В",
                             "default": 2.72
                         },
                         {
                             "element_name": "2.5(2) V  max",
                             "element_bytes": "02",
                             "type": "volts",
+                            "tooltip": "Доспустимые значения от 0 до 52.79 В",
                             "default": 2.61
                         },
                         {
                             "element_name": "3.3 V МЦО max",
                             "element_bytes": "03",
                             "type": "volts",
+                            "tooltip": "Доспустимые значения от 0 до 52.79 В",
                             "default": 2.18
                         },
                         {
                             "element_name": "1.25 V max",
                             "element_bytes": "05",
                             "type": "volts",
+                            "tooltip": "Доспустимые значения от 0 до 52.79 В",
                             "default": 1.33
                         },
                         {
                             "element_name": "3.3V max",
                             "element_bytes": "06",
                             "type": "volts",
+                            "tooltip": "Доспустимые значения от 0 до 52.79 В",
                             "default": 2.17
                         },
                         {
                             "element_name": "9 V max",
                             "element_bytes": "07",
                             "type": "volts",
+                            "tooltip": "Доспустимые значения от 0 до 52.79 В",
                             "default": 2.11
                         },
                         {
                             "element_name": "5 V max",
                             "element_bytes": "08",
                             "type": "volts",
+                            "tooltip": "Доспустимые значения от 0 до 52.79 В",
                             "default": 2.02
                         },
                         {
                             "element_name": "12 V max ",
                             "element_bytes": "09",
                             "type": "volts",
+                            "tooltip": "Доспустимые значения от 0 до 52.79 В",
                             "default": 2.11
                         },
                         {
                             "element_name": "-12 V max ",
                             "element_bytes": "0A",
                             "type": "volts",
+                            "tooltip": "Доспустимые значения от 0 до 52.79 В",
                             "default": 2.11
                         },
                         {
                             "element_name": "15 V max",
                             "element_bytes": "0B",
                             "type": "volts",
+                            "tooltip": "Доспустимые значения от 0 до 52.79 В",
                             "default": 2.15
                         },
                         {
                             "element_name": "-15 V max",
                             "element_bytes": "0C",
                             "type": "volts",
+                            "tooltip": "Доспустимые значения от 0 до 52.79 В",
                             "default": 2.17
                         }
                     ]
@@ -308,66 +352,77 @@ def get_default_json_data():
                             "element_name": "2.5(1) V  max",
                             "element_bytes": "01",
                             "type": "volts",
+                            "tooltip": "Доспустимые значения от 0 до 52.79 В",
                             "default": 2.22
                         },
                         {
                             "element_name": "2.5(2) V  max",
                             "element_bytes": "02",
                             "type": "volts",
+                            "tooltip": "Доспустимые значения от 0 до 52.79 В",
                             "default": 2.14
                         },
                         {
                             "element_name": "3.3 V МЦО max",
                             "element_bytes": "03",
                             "type": "volts",
+                            "tooltip": "Доспустимые значения от 0 до 52.79 В",
                             "default": 1.78
                         },
                         {
                             "element_name": "1.25 V max",
                             "element_bytes": "05",
                             "type": "volts",
+                            "tooltip": "Доспустимые значения от 0 до 52.79 В",
                             "default": 1.09
                         },
                         {
                             "element_name": "3.3V max",
                             "element_bytes": "06",
                             "type": "volts",
+                            "tooltip": "Доспустимые значения от 0 до 52.79 В",
                             "default": 1.78
                         },
                         {
                             "element_name": "9 V max",
                             "element_bytes": "07",
                             "type": "volts",
+                            "tooltip": "Доспустимые значения от 0 до 52.79 В",
                             "default": 1.73
                         },
                         {
                             "element_name": "5 V max",
                             "element_bytes": "08",
                             "type": "volts",
+                            "tooltip": "Доспустимые значения от 0 до 52.79 В",
                             "default": 1.65
                         },
                         {
                             "element_name": "12 V max ",
                             "element_bytes": "09",
                             "type": "volts",
+                            "tooltip": "Доспустимые значения от 0 до 52.79 В",
                             "default": 1.73
                         },
                         {
                             "element_name": "-12 V max ",
                             "element_bytes": "0A",
                             "type": "volts",
+                            "tooltip": "Доспустимые значения от 0 до 52.79 В",
                             "default": 1.72
                         },
                         {
                             "element_name": "15 V max",
                             "element_bytes": "0B",
                             "type": "volts",
+                            "tooltip": "Доспустимые значения от 0 до 52.79 В",
                             "default": 1.75
                         },
                         {
                             "element_name": "-15 V max",
                             "element_bytes": "0C",
                             "type": "volts",
+                            "tooltip": "Доспустимые значения от 0 до 52.79 В",
                             "default": 1.78
                         }
                     ]
@@ -387,66 +442,77 @@ def get_default_json_data():
                             "element_name": "Версия ПМО",
                             "element_bytes": "01",
                             "type": "hex",
+                            "tooltip": "Допустимые значения от 0000 до FFFF, обязательно 4 символа",
                             "default": "0000"
                         },
                         {
                             "element_name": "Дата ПМО",
                             "element_bytes": "02",
                             "type": "date",
+                            "tooltip": "Формат даты: ДД.ММ.ГГ",
                             "default": "00.00.00"
                         },
                         {
                             "element_name": "КС ПМО 1",
                             "element_bytes": "03",
-                            "type": "hex",
+                            "type": "cs",
+                            "tooltip": "Допустимые значения от 0000 до FFFF, обязательно 4 символа",
                             "default": "0000"
                         },
                         {
                             "element_name": "КС ПМО 2",
                             "element_bytes": "04",
-                            "type": "hex",
+                            "type": "cs",
+                            "tooltip": "Допустимые значения от 0000 до FFFF, обязательно 4 символа",
                             "default": "0000"
                         },
                         {
                             "element_name": "КС ПМО 3",
                             "element_bytes": "05",
-                            "type": "hex",
+                            "type": "cs",
+                            "tooltip": "Допустимые значения от 0000 до FFFF, обязательно 4 символа",
                             "default": "0000"
                         },
                         {
                             "element_name": "КС ПМО 4",
                             "element_bytes": "06",
-                            "type": "hex",
+                            "type": "cs",
+                            "tooltip": "Допустимые значения от 0000 до FFFF, обязательно 4 символа",
                             "default": "0000"
                         },
                         {
                             "element_name": "КС ПМО 5",
                             "element_bytes": "07",
-                            "type": "hex",
+                            "type": "cs",
+                            "tooltip": "Допустимые значения от 0000 до FFFF, обязательно 4 символа",
                             "default": "0000"
                         },
                         {
                             "element_name": "КС ПМО 6",
                             "element_bytes": "08",
-                            "type": "hex",
+                            "type": "cs",
+                            "tooltip": "Допустимые значения от 0000 до FFFF, обязательно 4 символа",
                             "default": "0000"
                         },
                         {
                             "element_name": "КС ПМО 7",
                             "element_bytes": "09",
-                            "type": "hex",
+                            "type": "cs",
+                            "tooltip": "Допустимые значения от 0000 до FFFF, обязательно 4 символа",
                             "default": "0000"
                         },
                         {
                             "element_name": "КС ПМО 8",
                             "element_bytes": "0A",
-                            "type": "hex",
+                            "type": "cs",
+                            "tooltip": "Допустимые значения от 0000 до FFFF, обязательно 4 символа",
                             "default": "0000"
                         },
                         {
                             "element_name": "Серийный №",
                             "element_bytes": "0B",
                             "type": "hex",
+                            "tooltip": "Допустимые значения от 0000 до FFFF, обязательно 4 символа",
                             "default": "0000"
                         }
                     ]
@@ -466,66 +532,77 @@ def get_default_json_data():
                             "element_name": "Версия ПМО",
                             "element_bytes": "01",
                             "type": "hex",
+                            "tooltip": "Допустимые значения от 0000 до FFFF, обязательно 4 символа",
                             "default": "0000"
                         },
                         {
                             "element_name": "Дата ПМО",
                             "element_bytes": "02",
                             "type": "date",
+                            "tooltip": "Формат даты: ДД.ММ.ГГ",
                             "default": "02.09.17"
                         },
                         {
                             "element_name": "КС ПМО 1",
                             "element_bytes": "03",
-                            "type": "hex",
+                            "type": "cs",
+                            "tooltip": "Допустимые значения от 0000 до FFFF, обязательно 4 символа",
                             "default": "0000"
                         },
                         {
                             "element_name": "КС ПМО 2",
                             "element_bytes": "04",
-                            "type": "hex",
+                            "type": "cs",
+                            "tooltip": "Допустимые значения от 0000 до FFFF, обязательно 4 символа",
                             "default": "0000"
                         },
                         {
                             "element_name": "КС ПМО 3",
                             "element_bytes": "05",
-                            "type": "hex",
+                            "type": "cs",
+                            "tooltip": "Допустимые значения от 0000 до FFFF, обязательно 4 символа",
                             "default": "0000"
                         },
                         {
                             "element_name": "КС ПМО 4",
                             "element_bytes": "06",
-                            "type": "hex",
+                            "type": "cs",
+                            "tooltip": "Допустимые значения от 0000 до FFFF, обязательно 4 символа",
                             "default": "0000"
                         },
                         {
                             "element_name": "КС ПМО 5",
                             "element_bytes": "07",
-                            "type": "hex",
+                            "type": "cs",
+                            "tooltip": "Допустимые значения от 0000 до FFFF, обязательно 4 символа",
                             "default": "0000"
                         },
                         {
                             "element_name": "КС ПМО 6",
                             "element_bytes": "08",
-                            "type": "hex",
+                            "type": "cs",
+                            "tooltip": "Допустимые значения от 0000 до FFFF, обязательно 4 символа",
                             "default": "0000"
                         },
                         {
                             "element_name": "КС ПМО 7",
                             "element_bytes": "09",
-                            "type": "hex",
+                            "type": "cs",
+                            "tooltip": "Допустимые значения от 0000 до FFFF, обязательно 4 символа",
                             "default": "0000"
                         },
                         {
                             "element_name": "КС ПМО 8",
                             "element_bytes": "0A",
-                            "type": "hex",
+                            "type": "cs",
+                            "tooltip": "Допустимые значения от 0000 до FFFF, обязательно 4 символа",
                             "default": "0000"
                         },
                         {
                             "element_name": "Серийный №",
                             "element_bytes": "0B",
                             "type": "hex",
+                            "tooltip": "Допустимые значения от 0000 до FFFF, обязательно 4 символа",
                             "default": "0000"
                         }
                     ]
@@ -542,21 +619,24 @@ def get_default_json_data():
                     "group_bytes": "50",
                     "elements": [
                         {
-                            "element_name": "Значение курса",
-                            "element_bytes": "55",
-                            "type": "hex",
-                            "default": "0000"
-                        },
-                        {
                             "element_name": "Значение крена",
                             "element_bytes": "56",
                             "type": "hex",
+                            "tooltip": "Допустимые значения от 0000 до FFFF, обязательно 4 символа",
                             "default": "0000"
                         },
                         {
                             "element_name": "Значение тангажа",
                             "element_bytes": "57",
                             "type": "hex",
+                            "tooltip": "Допустимые значения от 0000 до FFFF, обязательно 4 символа",
+                            "default": "0000"
+                        },
+                        {
+                            "element_name": "Значение курса",
+                            "element_bytes": "55",
+                            "type": "hex",
+                            "tooltip": "Допустимые значения от 0000 до FFFF, обязательно 4 символа",
                             "default": "0000"
                         }
                     ]
@@ -573,21 +653,24 @@ def get_default_json_data():
                     "group_bytes": "55",
                     "elements": [
                         {
-                            "element_name": "Значение курса",
-                            "element_bytes": "55",
-                            "type": "hex",
-                            "default": "0000"
-                        },
-                        {
                             "element_name": "Значение крена",
                             "element_bytes": "56",
                             "type": "hex",
+                            "tooltip": "Допустимые значения от 0000 до FFFF, обязательно 4 символа",
                             "default": "0000"
                         },
                         {
                             "element_name": "Значение тангажа",
                             "element_bytes": "57",
                             "type": "hex",
+                            "tooltip": "Допустимые значения от 0000 до FFFF, обязательно 4 символа",
+                            "default": "0000"
+                        },
+                        {
+                            "element_name": "Значение курса",
+                            "element_bytes": "55",
+                            "type": "hex",
+                            "tooltip": "Допустимые значения от 0000 до FFFF, обязательно 4 символа",
                             "default": "0000"
                         }
                     ]
@@ -649,11 +732,15 @@ def get_json_schema():
                                             "type": "string",
                                             "minLength": 1
                                         },
+                                        "tooltip": {
+                                            "type": "string",
+                                            "minLength": 0
+                                        },
                                         "default": {
                                             "type": ["number", "string"]
                                         }
                                     },
-                                    "required": ["element_name", "element_bytes", "type", "default"]
+                                    "required": ["element_name", "element_bytes", "type", "tooltip", "default"]
                                 }
                             }
                         },

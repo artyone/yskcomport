@@ -27,6 +27,7 @@ class ElementData:
     element_name: str
     element_bytes: str
     type: str
+    tooltip: str
     data: Any
     widget: Any = None
 
@@ -74,6 +75,7 @@ class Controller:
                             element['element_name'],
                             element['element_bytes'],
                             element['type'],
+                            element['tooltip'],
                             element['default']
                         ))
         return data
@@ -94,7 +96,7 @@ class Controller:
         return [data for data in self.get_group_datas(category_name) if data.group_name == group_name]
 
     def get_element_names(self, category_name, group_name):
-        return sorted({data.element_name for data in self.get_element_datas(category_name, group_name)})
+        return [data.element_name for data in self.get_element_datas(category_name, group_name)]
 
     def get_element_data(self, category_name, group_name, element_name):
         return [data for data in self.get_element_datas(category_name, group_name) if data.element_name == element_name][0]
@@ -210,7 +212,8 @@ class Controller:
         bytes_data = message.toHex().data().decode('utf-8').upper()
         main_bytes = bytes_data[:6]
         if main_bytes != '530841':
-            raise AnswerException('Первые три байта в пакете должны быть 53 08 41')
+            raise AnswerException(
+                'Первые три байта в пакете должны быть 53 08 41')
 
         group_bytes = bytes_data[6:8]
         element_bytes = bytes_data[8:10]
