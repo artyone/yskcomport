@@ -7,7 +7,7 @@ from PyQt5.QtWidgets import (QGroupBox, QHBoxLayout, QLabel, QLineEdit,
                              QWidget)
 
 from .controller import Controller, ElementData
-
+from functools import partial
 
 class LineWidget(QWidget):
     def __init__(self,
@@ -226,6 +226,147 @@ class GroupBoxesWidget(QWidget):
             widget.update_data_widgets()
 
 
+class DebugWidget(QWidget):
+    def __init__(self, *args, parent, ctrl: Controller, default_value=None):
+        super().__init__(*args)
+        self.parent = parent
+        self.ctrl = ctrl
+        self.main_window = self.ctrl.parent
+        self.widgets: list = []
+        if default_value is None:
+            default_value = ['53', '08', '', '', '', '', '',]
+        self.default_value = default_value
+        self.initUI()
+
+    def initUI(self):
+        layout = QHBoxLayout(self)
+
+        layout.addWidget(QLabel('Команда: '))
+        for val in self.default_value:
+            line_edit = QLineEdit()
+            line_edit.setFixedWidth(30)
+            line_edit.setText(val)
+            layout.addWidget(line_edit)
+            self.widgets.append(line_edit)
+            line_edit.textChanged.connect(partial(self.input_handler, line_edit))
+
+        layout.addWidget(QLabel('КС: '))
+
+        self.checksum_line_edit = QLineEdit('')
+        self.checksum_line_edit.setFixedWidth(30)
+        self.checksum_line_edit.setDisabled(True)
+        layout.addWidget(self.checksum_line_edit)
+        self.input_handler(self.checksum_line_edit)
+
+        layout.addSpacing(30)
+
+        self.send_button = QPushButton('Отправить')
+        self.send_button.clicked.connect(self.send_data)
+        layout.addWidget(self.send_button)
+        
+        layout.addSpacing(30)
+
+        destroy_button = QPushButton('-')
+        destroy_button.clicked.connect(self.destroy_widget)
+        destroy_button.setFixedWidth(30)
+        layout.addWidget(destroy_button)
+
+        layout.addStretch(1)
+
+    def send_data(self):
+        data = self.get_data_from_widgets()
+        self.main_window.start_sending([data], debug=True)
+        
+    def get_data_from_widgets(self):
+        data = []
+        for line_edit in self.widgets:
+            data.append(line_edit.text())
+        data.append(self.checksum_line_edit.text())
+        return data
+    
+    def destroy_widget(self):
+        self.parent.remove_widget(self)
+        self.deleteLater()
+
+    def input_handler(self, widget):
+        widget_text = widget.text()
+        if widget_text:
+            try:
+                num = int(widget_text, 16)
+                if num < 0 or num > 255:
+                    widget.setText(widget_text[:2])
+            except:
+                widget.setText(widget_text[:-1])
+                self.input_handler(widget)
+        try:
+            summ = sum(
+                [int(line_edit.text(), 16) for line_edit in self.widgets if line_edit.text()]) & 0xff
+            self.checksum_line_edit.setText(f'{summ:02X}')
+        except:
+            self.checksum_line_edit.setText('')
+            
+    def block_button(self, value: bool):
+        self.send_button.setDisabled(value)
+
+
+class DebugTabWidget(QWidget):
+    def __init__(self, *args, ctrl: Controller, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.ctrl = ctrl
+        self.main_window = self.ctrl.parent
+        self.widgets: list = []
+        self.initUI()
+
+    def initUI(self):
+        layout = QVBoxLayout(self)
+
+        self.widgets_layout = QVBoxLayout()
+        layout.addLayout(self.widgets_layout)
+        self.widgets_layout.setSpacing(0)
+        
+        for value in self.main_window.settings.value('default_debug'):
+            debug_widget = DebugWidget(parent=self, ctrl=self.ctrl, default_value=value)
+            self.widgets_layout.addWidget(debug_widget)
+            self.widgets.append(debug_widget)
+        
+        add_widget_button = QPushButton('+')
+        add_widget_button.clicked.connect(self.add_widget)
+        add_widget_button.setFixedWidth(30)
+        layout.addWidget(add_widget_button)
+
+        layout.addStretch(1)
+
+        self.send_button = QPushButton('Отправить все команды')
+        self.send_button.clicked.connect(self.send_data)
+        layout.addWidget(self.send_button)
+
+        self.apply_button = QPushButton('Отправить данные в Eeprom')
+        self.apply_button.clicked.connect(self.main_window.send_apply_command)
+        layout.addWidget(self.apply_button)
+
+    def remove_widget(self, widget):
+        self.widgets.remove(widget)
+    
+    def add_widget(self):
+        debug_widget = DebugWidget(parent=self, ctrl=self.ctrl)
+        debug_widget.block_button(not self.main_window.serial_port.isOpen())
+        self.widgets_layout.addWidget(debug_widget)
+        self.widgets.append(debug_widget)
+        
+        
+    def block_buttons(self, value: bool):
+        self.apply_button.setDisabled(value)
+        self.send_button.setDisabled(value)
+        for widget in self.widgets:
+            widget.block_button(value)
+            
+    def get_data_from_widgets(self):
+        return [widget.get_data_from_widgets() for widget in self.widgets]
+    
+    def send_data(self):
+        data = self.get_data_from_widgets()
+        self.main_window.start_sending(data, debug=True)
+
 class TabWidget(QTabWidget):
     def __init__(self, *args, ctrl: Controller, **kwargs):
         super().__init__(*args, **kwargs)
@@ -243,15 +384,22 @@ class TabWidget(QTabWidget):
             self.addTab(widget, category)
             self.widgets.append(widget)
 
+        self.debug_widget = DebugTabWidget(ctrl=self.ctrl)
+        self.addTab(self.debug_widget, 'Окно отладки')
+
     def get_data_from_widgets(self):
         result = []
         for widget in self.widgets:
             result.extend(widget.get_data_from_widgets())
         return result
+    
+    def get_data_from_debug(self):
+        return self.debug_widget.get_data_from_widgets()
 
     def block_buttons(self, value: bool):
         for widget in self.widgets:
             widget.block_buttons(value)
+        self.debug_widget.block_buttons(value)
 
     def update_data_widgets(self):
         for widget in self.widgets:

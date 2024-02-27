@@ -229,6 +229,13 @@ class Controller:
                     element.data = element_data
                 return element.widget
         raise AnswerException('Не удалось распознать команду')
+    
+    @staticmethod
+    def get_commands_debug(data):
+        commands = []
+        for val in data:
+            commands.append(bytes([int(i, base=16) if i else 0 for i in val]))
+        return commands
 
 
 if __name__ == '__main__':
