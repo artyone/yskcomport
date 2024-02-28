@@ -21,6 +21,7 @@ class AnswerException(Exception):
 class ElementData:
     category_name: str
     category_bytes: str
+    category_eeprom: str
     is_input: bool
     group_name: str
     group_bytes: str
@@ -69,6 +70,7 @@ class Controller:
                         ElementData(
                             category['category_name'],
                             category['category_bytes'],
+                            category['category_eeprom'],
                             category['is_input'],
                             group['group_name'],
                             group['group_bytes'],
@@ -100,6 +102,12 @@ class Controller:
 
     def get_element_data(self, category_name, group_name, element_name):
         return [data for data in self.get_element_datas(category_name, group_name) if data.element_name == element_name][0]
+    
+    def get_eeprom_command(self, category_name):
+        lst = self.get_group_datas(category_name)
+        if len(lst):
+            return lst[0].category_eeprom
+        return ''
 
     # def set_new_fixed_bytes(self, new_bytes: str):
     #     try:
@@ -204,8 +212,8 @@ class Controller:
                         'bytes': element['element_bytes']}
         return result
 
-    def get_apply_command(self):
-        command = '53 08 14 50 50 00 00 0F'
+    @staticmethod
+    def get_apply_command(command):
         return bytes.fromhex(command)
 
     def get_element_from_answer(self, message):

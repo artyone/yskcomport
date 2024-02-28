@@ -41,7 +41,6 @@ class MainWindow(QMainWindow):
         try:
             self.ctrl = Controller(self)
         except Exception as e:
-            print(str(e))
             if self.show_message_box('Ошибка файла json, восстановить файл по-умолчанию?'):
                 Controller.generate_json()
                 self.ctrl = Controller(self)
@@ -103,6 +102,7 @@ class MainWindow(QMainWindow):
         filter_layout.addRow('Фильтр лога: ', self.filter_combobox)
         
         self.log_widget = QPlainTextEdit()
+        self.log_widget.setMinimumWidth(350)
         layout.addWidget(self.log_widget)
         return widget
         
@@ -152,13 +152,13 @@ class MainWindow(QMainWindow):
             [command.hex().upper()[i:i+2] for i in range(0, len(command.hex()), 2)])
         return formatted_command
 
-    def send_apply_command(self):
+    def send_apply_command(self, command):
         if not self.serial_port.isOpen():
             self.set_console_text('Необходимо открыть порт', 'error')
             return
-        command = self.ctrl.get_apply_command()
-        self.serial_port.write(command)
-        self.set_console_text(f'Команда записать в Eeprom отправлена.')
+        byte_command = self.ctrl.get_apply_command(command)
+        self.serial_port.write(byte_command)
+        self.set_console_text(f'Команда записать отправлена: {command}')
 
     def read_data(self):
         while self.serial_port.waitForReadyRead(100):

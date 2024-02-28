@@ -2,6 +2,7 @@
     {
         "category_name": "Опрос текущих пороговых значений АЦП",
         "category_bytes": "530814",
+        "category_eeprom": "",
         "is_input": false,
         "groups": [
             {
@@ -23,7 +24,7 @@
                         "default": 0
                     },
                     {
-                        "element_name": "52.79 V МЦО max",
+                        "element_name": "3.3 V МЦО max",
                         "element_bytes": "03",
                         "type": "volts",
                         "tooltip": "Доспустимые значения от 0 до 52.79 В",
@@ -106,7 +107,7 @@
                         "default": 0
                     },
                     {
-                        "element_name": "52.79 V МЦО max",
+                        "element_name": "3.3 V МЦО max",
                         "element_bytes": "03",
                         "type": "volts",
                         "tooltip": "Доспустимые значения от 0 до 52.79 В",
@@ -189,7 +190,7 @@
                         "default": 0
                     },
                     {
-                        "element_name": "52.79 V МЦО max",
+                        "element_name": "3.3 V МЦО max",
                         "element_bytes": "03",
                         "type": "volts",
                         "tooltip": "Доспустимые значения от 0 до 52.79 В",
@@ -258,6 +259,7 @@
     {
         "category_name": "Ввод пороговых значений АЦП",
         "category_bytes": "530814",
+        "category_eeprom": "",
         "is_input": true,
         "groups": [
             {
@@ -279,7 +281,7 @@
                         "default": 2.61
                     },
                     {
-                        "element_name": "52.79 V МЦО max",
+                        "element_name": "3.3 V МЦО max",
                         "element_bytes": "03",
                         "type": "volts",
                         "tooltip": "Доспустимые значения от 0 до 52.79 В",
@@ -362,7 +364,7 @@
                         "default": 2.14
                     },
                     {
-                        "element_name": "52.79 V МЦО max",
+                        "element_name": "3.3 V МЦО max",
                         "element_bytes": "03",
                         "type": "volts",
                         "tooltip": "Доспустимые значения от 0 до 52.79 В",
@@ -431,6 +433,7 @@
     {
         "category_name": "Опрос текущей инормации о ПМО",
         "category_bytes": "530814",
+        "category_eeprom": "",
         "is_input": false,
         "groups": [
             {
@@ -521,6 +524,7 @@
     {
         "category_name": "Ввод инормации о ПМО",
         "category_bytes": "530814",
+        "category_eeprom": "53 08 14 50 51 00 00 0F",
         "is_input": true,
         "groups": [
             {
@@ -596,7 +600,21 @@
                         "type": "cs",
                         "tooltip": "Допустимые значения от 0000 до FFFF, обязательно 4 символа",
                         "default": "0000"
-                    },
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "category_name": "Ввод серийного номера ПМО",
+        "category_bytes": "530814",
+        "category_eeprom": "",
+        "is_input": true,
+        "groups": [
+            {
+                "group_name": "Ввод серийного номера ПМО",
+                "group_bytes": "53",
+                "elements": [
                     {
                         "element_name": "Серийный №",
                         "element_bytes": "0B",
@@ -611,6 +629,7 @@
     {
         "category_name": "Опрос текущей информации из Eeprom",
         "category_bytes": "530814",
+        "category_eeprom": "",
         "is_input": false,
         "groups": [
             {
@@ -646,6 +665,7 @@
         "category_name": "Ввод поправок в Eeprom",
         "category_bytes": "530814",
         "is_input": true,
+        "category_eeprom": "53 08 14 50 50 00 00 0F",
         "groups": [
             {
                 "group_name": "Ввод поправок в eeprom",

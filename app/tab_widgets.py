@@ -203,9 +203,11 @@ class GroupBoxesWidget(QWidget):
         self.send_button.clicked.connect(self.send_data)
         layout.addWidget(self.send_button)
 
-        self.apply_button = QPushButton('Отправить данные в Eeprom')
-        self.apply_button.clicked.connect(self.main_window.send_apply_command)
-        layout.addWidget(self.apply_button)
+        eeprom_command = self.ctrl.get_eeprom_command(self.category)
+        if eeprom_command:
+            self.apply_button = QPushButton('Отправить данные в Eeprom')
+            self.apply_button.clicked.connect(partial(self.main_window.send_apply_command, eeprom_command))
+            layout.addWidget(self.apply_button)
 
     def get_data_from_widgets(self):
         result = []
@@ -218,7 +220,8 @@ class GroupBoxesWidget(QWidget):
         self.main_window.start_sending(data)
 
     def block_buttons(self, value: bool):
-        self.apply_button.setDisabled(value)
+        if 'apply_button' in dir(self):
+            self.apply_button.setDisabled(value)
         self.send_button.setDisabled(value)
 
     def update_data_widgets(self):
@@ -340,9 +343,6 @@ class DebugTabWidget(QWidget):
         self.send_button.clicked.connect(self.send_data)
         layout.addWidget(self.send_button)
 
-        self.apply_button = QPushButton('Отправить данные в Eeprom')
-        self.apply_button.clicked.connect(self.main_window.send_apply_command)
-        layout.addWidget(self.apply_button)
 
     def remove_widget(self, widget):
         self.widgets.remove(widget)
@@ -355,7 +355,6 @@ class DebugTabWidget(QWidget):
         
         
     def block_buttons(self, value: bool):
-        self.apply_button.setDisabled(value)
         self.send_button.setDisabled(value)
         for widget in self.widgets:
             widget.block_button(value)

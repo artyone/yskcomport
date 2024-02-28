@@ -3,6 +3,7 @@ def get_default_json_data():
         {
             "category_name": "Опрос текущих пороговых значений АЦП",
             "category_bytes": "530814",
+            "category_eeprom": "",
             "is_input": False,
             "groups": [
                 {
@@ -259,6 +260,7 @@ def get_default_json_data():
         {
             "category_name": "Ввод пороговых значений АЦП",
             "category_bytes": "530814",
+            "category_eeprom": "",
             "is_input": True,
             "groups": [
                 {
@@ -432,6 +434,7 @@ def get_default_json_data():
         {
             "category_name": "Опрос текущей инормации о ПМО",
             "category_bytes": "530814",
+            "category_eeprom": "",
             "is_input": False,
             "groups": [
                 {
@@ -522,6 +525,7 @@ def get_default_json_data():
         {
             "category_name": "Ввод инормации о ПМО",
             "category_bytes": "530814",
+            "category_eeprom": "53 08 14 50 51 00 00 0F",
             "is_input": True,
             "groups": [
                 {
@@ -597,7 +601,21 @@ def get_default_json_data():
                             "type": "cs",
                             "tooltip": "Допустимые значения от 0000 до FFFF, обязательно 4 символа",
                             "default": "0000"
-                        },
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "category_name": "Ввод серийного номера ПМО",
+            "category_bytes": "530814",
+            "category_eeprom": "",
+            "is_input": True,
+            "groups": [
+                {
+                    "group_name": "Ввод серийного номера ПМО",
+                    "group_bytes": "53",
+                    "elements": [
                         {
                             "element_name": "Серийный №",
                             "element_bytes": "0B",
@@ -612,6 +630,7 @@ def get_default_json_data():
         {
             "category_name": "Опрос текущей информации из Eeprom",
             "category_bytes": "530814",
+            "category_eeprom": "",
             "is_input": False,
             "groups": [
                 {
@@ -647,6 +666,7 @@ def get_default_json_data():
             "category_name": "Ввод поправок в Eeprom",
             "category_bytes": "530814",
             "is_input": True,
+            "category_eeprom": "53 08 14 50 50 00 00 0F",
             "groups": [
                 {
                     "group_name": "Ввод поправок в eeprom",
@@ -696,6 +716,11 @@ def get_json_schema():
                     "type": "string",
                     "minLength": 6,
                     "maxLength": 6
+                },
+                "category_eeprom": {
+                    "type": "string",
+                    "minLength": 0,
+                    "maxLength": 23
                 },
                 "is_input": {
                     "type": "boolean",
