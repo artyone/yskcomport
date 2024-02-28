@@ -6,7 +6,7 @@ from PyQt5.QtGui import QCloseEvent, QColor, QIcon, QTextCharFormat, QTextCursor
 from PyQt5.QtSerialPort import QSerialPort, QSerialPortInfo
 from PyQt5.QtWidgets import (QApplication, QComboBox, QHBoxLayout, QMainWindow,
                              QMessageBox, QPlainTextEdit, QProgressBar,
-                             QPushButton, QSplitter, QVBoxLayout, QWidget)
+                             QPushButton, QSplitter, QVBoxLayout, QWidget, QFormLayout)
 
 from .controller import AnswerException, Controller
 from .tab_widgets import TabWidget
@@ -32,7 +32,7 @@ class MainWindow(QMainWindow):
         self.restoreGeometry(geometry)
 
         self.app.setWindowIcon(QIcon('icon.ico'))
-        self.setWindowTitle('YSK, ver. 24.02.27')
+        self.setWindowTitle('YSK, ver. 24.02.28')
 
         self.serial_port = QSerialPort(self)
         self.serial_port.readyRead.connect(self.read_data)
@@ -70,11 +70,12 @@ class MainWindow(QMainWindow):
         self.main_layout.addLayout(open_close_layout)
 
         splitter = QSplitter()
+        
         self.tabs = TabWidget(ctrl=self.ctrl)
-        self.console_widget = QPlainTextEdit()
-
+        right_block = self.get_right_block()
+        
         splitter.addWidget(self.tabs)
-        splitter.addWidget(self.console_widget)
+        splitter.addWidget(right_block)
 
         self.main_layout.addWidget(splitter)
 
@@ -90,7 +91,21 @@ class MainWindow(QMainWindow):
     def moveEvent(self, a0) -> None:
         self.settings.setValue('geometry', self.saveGeometry())
         return super().moveEvent(a0)
-
+    
+    def get_right_block(self):
+        widget = QWidget()
+        layout = QVBoxLayout(widget)
+        filter_layout = QFormLayout()
+        layout.addLayout(filter_layout)
+        
+        self.filter_combobox = QComboBox()
+        self.filter_combobox.addItems(['Нет', 'Не показывать 0F'])
+        filter_layout.addRow('Фильтр лога: ', self.filter_combobox)
+        
+        self.log_widget = QPlainTextEdit()
+        layout.addWidget(self.log_widget)
+        return widget
+        
     def start_sending(self, widget_datas, debug=False):
         if not self.serial_port.isOpen():
             self.set_console_text('Необходимо открыть порт', 'error')
@@ -100,10 +115,7 @@ class MainWindow(QMainWindow):
             self.commands = self.ctrl.get_commands_debug(widget_datas)
         else:
             self.commands = self.ctrl.get_data_for_temp_memory(widget_datas)
-        
-        for command in self.commands:
-            print(command.hex().upper())
-        
+
         self.current_index = 0
 
         self.progress_bar = QProgressBar()
@@ -159,6 +171,8 @@ class MainWindow(QMainWindow):
             try:
                 widget = self.ctrl.get_element_from_answer(data)
             except AnswerException as e:
+                if self.filter_combobox.currentIndex() == 1 and data[3] == 0xF:
+                    continue
                 self.set_console_text(str(e), 'error')
                 continue
             widget.update_data()
@@ -229,12 +243,12 @@ class MainWindow(QMainWindow):
         if type == 'error':
             text_format.setForeground(QColor('red'))
 
-        cursor = self.console_widget.textCursor()
+        cursor = self.log_widget.textCursor()
         cursor.movePosition(QTextCursor.MoveOperation.End)
         cursor.insertText(formatted_text, text_format)
-        self.console_widget.setTextCursor(cursor)
+        self.log_widget.setTextCursor(cursor)
 
-        self.console_widget.ensureCursorVisible()
+        self.log_widget.ensureCursorVisible()
 
     def closeEvent(self, a0: QCloseEvent) -> None:
         self.close_serial_port()
