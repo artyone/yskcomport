@@ -525,7 +525,7 @@ def get_default_json_data():
         {
             "category_name": "Ввод инормации о ПМО",
             "category_bytes": "530814",
-            "category_eeprom": "53 08 14 50 51 00 00 0F",
+            "category_eeprom": "53 08 14 50 51 00 00 10",
             "is_input": True,
             "groups": [
                 {

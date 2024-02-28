@@ -163,6 +163,8 @@ class MainWindow(QMainWindow):
     def read_data(self):
         while self.serial_port.waitForReadyRead(100):
             data = self.serial_port.readAll()
+            if self.filter_combobox.currentIndex() == 1 and data[0:4] == b'\x53\x08\x54\x0f':
+                continue
             self.set_console_text(
                 f"Приняты данные: {self.command_byte_to_str(data.data())}")
             data = self.check_answer(data)
@@ -171,8 +173,6 @@ class MainWindow(QMainWindow):
             try:
                 widget = self.ctrl.get_element_from_answer(data)
             except AnswerException as e:
-                if self.filter_combobox.currentIndex() == 1 and data[3] == 0xF:
-                    continue
                 self.set_console_text(str(e), 'error')
                 continue
             widget.update_data()
@@ -223,10 +223,12 @@ class MainWindow(QMainWindow):
         if is_open_port:
             self.set_console_text(
                 f'Порт {self.serial_port.portName()} открыт.')
+            self.tabs.block_buttons(False)
         else:
             self.set_console_text(
                 f'Порт {self.serial_port.portName()} НЕ открыт.', 'error')
-        self.tabs.block_buttons(False)
+            self.tabs.block_buttons(True)
+
 
     def close_serial_port(self):
         if self.serial_port.isOpen():
