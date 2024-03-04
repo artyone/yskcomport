@@ -1,12 +1,14 @@
 import sys
 
-from PyQt5.QtCore import (QCoreApplication, QIODevice, QProcess, QSettings,
-                          QTime, QTimer, QByteArray)
-from PyQt5.QtGui import QCloseEvent, QColor, QIcon, QTextCharFormat, QTextCursor
+from PyQt5.QtCore import (QByteArray, QCoreApplication, QIODevice, QProcess,
+                          QSettings, QTime, QTimer)
+from PyQt5.QtGui import (QCloseEvent, QColor, QIcon, QTextCharFormat,
+                         QTextCursor)
 from PyQt5.QtSerialPort import QSerialPort, QSerialPortInfo
-from PyQt5.QtWidgets import (QApplication, QComboBox, QHBoxLayout, QMainWindow,
-                             QMessageBox, QPlainTextEdit, QProgressBar,
-                             QPushButton, QSplitter, QVBoxLayout, QWidget, QFormLayout)
+from PyQt5.QtWidgets import (QApplication, QComboBox, QHBoxLayout, QLabel,
+                             QMainWindow, QMessageBox, QPlainTextEdit,
+                             QProgressBar, QPushButton, QSplitter, QVBoxLayout,
+                             QWidget)
 
 from .controller import AnswerException, Controller
 from .tab_widgets import TabWidget
@@ -32,7 +34,7 @@ class MainWindow(QMainWindow):
         self.restoreGeometry(geometry)
 
         self.app.setWindowIcon(QIcon('icon.ico'))
-        self.setWindowTitle('YSK, ver. 24.02.28')
+        self.setWindowTitle('YSK, ver. 24.03.04')
 
         self.serial_port = QSerialPort(self)
         self.serial_port.readyRead.connect(self.read_data)
@@ -69,10 +71,10 @@ class MainWindow(QMainWindow):
         self.main_layout.addLayout(open_close_layout)
 
         splitter = QSplitter()
-        
+
         self.tabs = TabWidget(ctrl=self.ctrl)
         right_block = self.get_right_block()
-        
+
         splitter.addWidget(self.tabs)
         splitter.addWidget(right_block)
 
@@ -90,22 +92,30 @@ class MainWindow(QMainWindow):
     def moveEvent(self, a0) -> None:
         self.settings.setValue('geometry', self.saveGeometry())
         return super().moveEvent(a0)
-    
+
     def get_right_block(self):
         widget = QWidget()
         layout = QVBoxLayout(widget)
-        filter_layout = QFormLayout()
+        filter_layout = QHBoxLayout()
         layout.addLayout(filter_layout)
-        
+
         self.filter_combobox = QComboBox()
         self.filter_combobox.addItems(['Нет', 'Не показывать 0F'])
-        filter_layout.addRow('Фильтр лога: ', self.filter_combobox)
-        
+        filter_layout.addWidget(QLabel('Фильтр лога: '))
+        filter_layout.addWidget(self.filter_combobox)
+
+        clear_log_btn = QPushButton('Очистить лог')
+        clear_log_btn.clicked.connect(self.clear_log)
+        filter_layout.addWidget(clear_log_btn)
+
         self.log_widget = QPlainTextEdit()
         self.log_widget.setMinimumWidth(350)
         layout.addWidget(self.log_widget)
         return widget
-        
+
+    def clear_log(self):
+        self.log_widget.clear()
+
     def start_sending(self, widget_datas, debug=False):
         if not self.serial_port.isOpen():
             self.set_console_text('Необходимо открыть порт', 'error')
@@ -124,7 +134,7 @@ class MainWindow(QMainWindow):
 
         self.block_all_elements(True)
         self.timer.start(50)
-        
+
     def send_next_command(self):
         if self.current_index >= len(self.commands):
             self.timer.stop()
@@ -177,7 +187,6 @@ class MainWindow(QMainWindow):
                 continue
             widget.update_data()
 
-
     def check_answer(self, answer):
         if len(answer) == 8:
             return answer
@@ -229,7 +238,6 @@ class MainWindow(QMainWindow):
                 f'Порт {self.serial_port.portName()} НЕ открыт.', 'error')
             self.tabs.block_buttons(True)
 
-
     def close_serial_port(self):
         if self.serial_port.isOpen():
             self.serial_port.close()
@@ -254,7 +262,7 @@ class MainWindow(QMainWindow):
 
     def closeEvent(self, a0: QCloseEvent) -> None:
         self.close_serial_port()
-        
+
         default_values = self.tabs.get_data_from_debug()
         default_settings = [i[:-1] for i in default_values]
         self.settings.setValue('default_debug', default_settings)
