@@ -129,6 +129,7 @@ class GroupBox(QGroupBox):
             **kwargs):
         super().__init__(*args, **kwargs)
         self.ctrl = ctrl
+        self.main_window = self.ctrl.parent
         self.category_name = category_name
         self.group_name = group_name
         self.widgets = []
@@ -159,16 +160,18 @@ class GroupBox(QGroupBox):
                 ctrl=self.ctrl,
                 element_data=element_data
             )
-            if element_data.type == 'cs':
-                try:
-                    sub_line_layout.addWidget(line_widget)
-                except:
-                    sub_line_layout = QHBoxLayout()
-                    layout.addLayout(sub_line_layout)
-                    sub_line_layout.addWidget(line_widget)
-            else:
-                layout.addWidget(line_widget)
+            layout.addWidget(line_widget)
             self.widgets.append(line_widget)
+        
+        self.send_button = QPushButton('Отправить данные')
+        self.send_button.clicked.connect(self.send_data)
+        layout.addWidget(self.send_button)
+        
+        self.eeprom_commands = self.ctrl.get_eeprom_command(self.category_name, self.group_name)
+        if self.eeprom_commands:
+            self.apply_button = QPushButton('Отправить данные в Eeprom')
+            self.apply_button.clicked.connect(self.send_eeprom)
+            layout.addWidget(self.apply_button)
 
     def get_data_from_widgets(self):
         return [widget.get_input_data() for widget in self.widgets]
@@ -176,6 +179,20 @@ class GroupBox(QGroupBox):
     def update_data_widgets(self):
         for widget in self.widgets:
             widget.udpate_data()
+            
+    def send_data(self):
+        data = self.get_data_from_widgets()
+        self.main_window.start_sending(data)
+    
+    def send_eeprom(self):
+        for command in self.eeprom_commands:
+            self.main_window.send_apply_command(command)
+            
+    
+    def block_buttons(self, value):
+        if 'apply_button' in dir(self):
+            self.apply_button.setDisabled(value)
+        self.send_button.setDisabled(value)
 
 
 class GroupBoxesWidget(QWidget):
@@ -199,15 +216,6 @@ class GroupBoxesWidget(QWidget):
             gb_layout.addWidget(gb)
             self.widgets.append(gb)
 
-        self.send_button = QPushButton('Отправить данные')
-        self.send_button.clicked.connect(self.send_data)
-        layout.addWidget(self.send_button)
-
-        eeprom_command = self.ctrl.get_eeprom_command(self.category)
-        if eeprom_command:
-            self.apply_button = QPushButton('Отправить данные в Eeprom')
-            self.apply_button.clicked.connect(partial(self.main_window.send_apply_command, eeprom_command))
-            layout.addWidget(self.apply_button)
 
     def get_data_from_widgets(self):
         result = []
@@ -215,14 +223,9 @@ class GroupBoxesWidget(QWidget):
             result.extend(widget.get_data_from_widgets())
         return result
 
-    def send_data(self):
-        data = self.get_data_from_widgets()
-        self.main_window.start_sending(data)
-
     def block_buttons(self, value: bool):
-        if 'apply_button' in dir(self):
-            self.apply_button.setDisabled(value)
-        self.send_button.setDisabled(value)
+        for widget in self.widgets:
+            widget.block_buttons(value)
 
     def update_data_widgets(self):
         for widget in self.widgets:

@@ -3,12 +3,12 @@ def get_default_json_data():
         {
             "category_name": "Опрос текущих пороговых значений АЦП",
             "category_bytes": "530814",
-            "category_eeprom": "",
             "is_input": False,
             "groups": [
                 {
                     "group_name": "Максильмальное значение",
                     "group_bytes": "0A",
+                    "group_eeprom": [],
                     "elements": [
                         {
                             "element_name": "2.5(1) V  max",
@@ -92,6 +92,7 @@ def get_default_json_data():
                 {
                     "group_name": "Минимальное значение",
                     "group_bytes": "09",
+                    "group_eeprom": [],
                     "elements": [
                         {
                             "element_name": "2.5(1) V  max",
@@ -175,6 +176,7 @@ def get_default_json_data():
                 {
                     "group_name": "Номинальное значение",
                     "group_bytes": "08",
+                    "group_eeprom": [],
                     "elements": [
                         {
                             "element_name": "2.5(1) V  max",
@@ -258,14 +260,133 @@ def get_default_json_data():
             ]
         },
         {
+            "category_name": "Опрос текущей инормации о ПМО",
+            "category_bytes": "530814",
+            "is_input": False,
+            "groups": [
+                {
+                    "group_name": "Опрос информации о ПМО",
+                    "group_bytes": "54",
+                    "group_eeprom": [],
+                    "elements": [
+                        {
+                            "element_name": "Версия ПМО",
+                            "element_bytes": "01",
+                            "type": "hex",
+                            "tooltip": "Допустимые значения от 0000 до FFFF, обязательно 4 символа",
+                            "default": "0000"
+                        },
+                        {
+                            "element_name": "Дата ПМО",
+                            "element_bytes": "02",
+                            "type": "date",
+                            "tooltip": "Формат даты: ДД.ММ.ГГ",
+                            "default": "00.00.00"
+                        },
+                        {
+                            "element_name": "КС ПМО 1",
+                            "element_bytes": "03",
+                            "type": "cs",
+                            "tooltip": "Допустимые значения от 0000 до FFFF, обязательно 4 символа",
+                            "default": "0000"
+                        },
+                        {
+                            "element_name": "КС ПМО 2",
+                            "element_bytes": "04",
+                            "type": "cs",
+                            "tooltip": "Допустимые значения от 0000 до FFFF, обязательно 4 символа",
+                            "default": "0000"
+                        },
+                        {
+                            "element_name": "КС ПМО 3",
+                            "element_bytes": "05",
+                            "type": "cs",
+                            "tooltip": "Допустимые значения от 0000 до FFFF, обязательно 4 символа",
+                            "default": "0000"
+                        },
+                        {
+                            "element_name": "КС ПМО 4",
+                            "element_bytes": "06",
+                            "type": "cs",
+                            "tooltip": "Допустимые значения от 0000 до FFFF, обязательно 4 символа",
+                            "default": "0000"
+                        },
+                        {
+                            "element_name": "КС ПМО 5",
+                            "element_bytes": "07",
+                            "type": "cs",
+                            "tooltip": "Допустимые значения от 0000 до FFFF, обязательно 4 символа",
+                            "default": "0000"
+                        },
+                        {
+                            "element_name": "КС ПМО 6",
+                            "element_bytes": "08",
+                            "type": "cs",
+                            "tooltip": "Допустимые значения от 0000 до FFFF, обязательно 4 символа",
+                            "default": "0000"
+                        },
+                        {
+                            "element_name": "КС ПМО 7",
+                            "element_bytes": "09",
+                            "type": "cs",
+                            "tooltip": "Допустимые значения от 0000 до FFFF, обязательно 4 символа",
+                            "default": "0000"
+                        },
+                        {
+                            "element_name": "КС ПМО 8",
+                            "element_bytes": "0A",
+                            "type": "cs",
+                            "tooltip": "Допустимые значения от 0000 до FFFF, обязательно 4 символа",
+                            "default": "0000"
+                        },
+                        {
+                            "element_name": "Серийный №",
+                            "element_bytes": "0B",
+                            "type": "hex",
+                            "tooltip": "Допустимые значения от 0000 до FFFF, обязательно 4 символа",
+                            "default": "0000"
+                        }
+                    ]
+                },
+                {
+                    "group_name": "Cчитать текущее значение из Eeprom",
+                    "group_bytes": "50",
+                    "group_eeprom": [],
+                    "elements": [
+                        {
+                            "element_name": "Значение крена",
+                            "element_bytes": "56",
+                            "type": "hex",
+                            "tooltip": "Допустимые значения от 0000 до FFFF, обязательно 4 символа",
+                            "default": "0000"
+                        },
+                        {
+                            "element_name": "Значение тангажа",
+                            "element_bytes": "57",
+                            "type": "hex",
+                            "tooltip": "Допустимые значения от 0000 до FFFF, обязательно 4 символа",
+                            "default": "0000"
+                        },
+                        {
+                            "element_name": "Значение курса",
+                            "element_bytes": "55",
+                            "type": "hex",
+                            "tooltip": "Допустимые значения от 0000 до FFFF, обязательно 4 символа",
+                            "default": "0000"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
             "category_name": "Ввод пороговых значений АЦП",
             "category_bytes": "530814",
-            "category_eeprom": "",
             "is_input": True,
             "groups": [
                 {
                     "group_name": "Максильмальное значение",
                     "group_bytes": "51",
+                    "group_eeprom": [],
                     "elements": [
                         {
                             "element_name": "2.5(1) V  max",
@@ -349,6 +470,7 @@ def get_default_json_data():
                 {
                     "group_name": "Минимальное значение",
                     "group_bytes": "52",
+                    "group_eeprom": [],
                     "elements": [
                         {
                             "element_name": "2.5(1) V  max",
@@ -432,105 +554,14 @@ def get_default_json_data():
             ]
         },
         {
-            "category_name": "Опрос текущей инормации о ПМО",
-            "category_bytes": "530814",
-            "category_eeprom": "",
-            "is_input": False,
-            "groups": [
-                {
-                    "group_name": "Опрос информации о ПМО",
-                    "group_bytes": "54",
-                    "elements": [
-                        {
-                            "element_name": "Версия ПМО",
-                            "element_bytes": "01",
-                            "type": "hex",
-                            "tooltip": "Допустимые значения от 0000 до FFFF, обязательно 4 символа",
-                            "default": "0000"
-                        },
-                        {
-                            "element_name": "Дата ПМО",
-                            "element_bytes": "02",
-                            "type": "date",
-                            "tooltip": "Формат даты: ДД.ММ.ГГ",
-                            "default": "00.00.00"
-                        },
-                        {
-                            "element_name": "КС ПМО 1",
-                            "element_bytes": "03",
-                            "type": "cs",
-                            "tooltip": "Допустимые значения от 0000 до FFFF, обязательно 4 символа",
-                            "default": "0000"
-                        },
-                        {
-                            "element_name": "КС ПМО 2",
-                            "element_bytes": "04",
-                            "type": "cs",
-                            "tooltip": "Допустимые значения от 0000 до FFFF, обязательно 4 символа",
-                            "default": "0000"
-                        },
-                        {
-                            "element_name": "КС ПМО 3",
-                            "element_bytes": "05",
-                            "type": "cs",
-                            "tooltip": "Допустимые значения от 0000 до FFFF, обязательно 4 символа",
-                            "default": "0000"
-                        },
-                        {
-                            "element_name": "КС ПМО 4",
-                            "element_bytes": "06",
-                            "type": "cs",
-                            "tooltip": "Допустимые значения от 0000 до FFFF, обязательно 4 символа",
-                            "default": "0000"
-                        },
-                        {
-                            "element_name": "КС ПМО 5",
-                            "element_bytes": "07",
-                            "type": "cs",
-                            "tooltip": "Допустимые значения от 0000 до FFFF, обязательно 4 символа",
-                            "default": "0000"
-                        },
-                        {
-                            "element_name": "КС ПМО 6",
-                            "element_bytes": "08",
-                            "type": "cs",
-                            "tooltip": "Допустимые значения от 0000 до FFFF, обязательно 4 символа",
-                            "default": "0000"
-                        },
-                        {
-                            "element_name": "КС ПМО 7",
-                            "element_bytes": "09",
-                            "type": "cs",
-                            "tooltip": "Допустимые значения от 0000 до FFFF, обязательно 4 символа",
-                            "default": "0000"
-                        },
-                        {
-                            "element_name": "КС ПМО 8",
-                            "element_bytes": "0A",
-                            "type": "cs",
-                            "tooltip": "Допустимые значения от 0000 до FFFF, обязательно 4 символа",
-                            "default": "0000"
-                        },
-                        {
-                            "element_name": "Серийный №",
-                            "element_bytes": "0B",
-                            "type": "hex",
-                            "tooltip": "Допустимые значения от 0000 до FFFF, обязательно 4 символа",
-                            "default": "0000"
-                        }
-                    ]
-                }
-            ]
-        },
-        {
             "category_name": "Ввод инормации о ПМО",
             "category_bytes": "530814",
-            "category_eeprom": "53 08 14 50 51 00 00 10",
             "is_input": True,
             "groups": [
                 {
                     "group_name": "Ввод информации о ПМО",
                     "group_bytes": "53",
+                    "group_eeprom": ["53 08 14 50 50 00 00 10", "53 08 14 50 51 00 00 10"],
                     "elements": [
                         {
                             "element_name": "Версия ПМО",
@@ -603,18 +634,11 @@ def get_default_json_data():
                             "default": "0000"
                         }
                     ]
-                }
-            ]
-        },
-        {
-            "category_name": "Ввод серийного номера ПМО",
-            "category_bytes": "530814",
-            "category_eeprom": "",
-            "is_input": True,
-            "groups": [
+                },
                 {
                     "group_name": "Ввод серийного номера ПМО",
                     "group_bytes": "53",
+                    "group_eeprom": ["53 08 14 50 50 00 00 10"],
                     "elements": [
                         {
                             "element_name": "Серийный №",
@@ -624,53 +648,11 @@ def get_default_json_data():
                             "default": "0000"
                         }
                     ]
-                }
-            ]
-        },
-        {
-            "category_name": "Опрос текущей информации из Eeprom",
-            "category_bytes": "530814",
-            "category_eeprom": "",
-            "is_input": False,
-            "groups": [
-                {
-                    "group_name": "Cчитать текущее значение из Eeprom",
-                    "group_bytes": "50",
-                    "elements": [
-                        {
-                            "element_name": "Значение крена",
-                            "element_bytes": "56",
-                            "type": "hex",
-                            "tooltip": "Допустимые значения от 0000 до FFFF, обязательно 4 символа",
-                            "default": "0000"
-                        },
-                        {
-                            "element_name": "Значение тангажа",
-                            "element_bytes": "57",
-                            "type": "hex",
-                            "tooltip": "Допустимые значения от 0000 до FFFF, обязательно 4 символа",
-                            "default": "0000"
-                        },
-                        {
-                            "element_name": "Значение курса",
-                            "element_bytes": "55",
-                            "type": "hex",
-                            "tooltip": "Допустимые значения от 0000 до FFFF, обязательно 4 символа",
-                            "default": "0000"
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "category_name": "Ввод поправок в Eeprom",
-            "category_bytes": "530814",
-            "is_input": True,
-            "category_eeprom": "53 08 14 50 50 00 00 0F",
-            "groups": [
+                },
                 {
                     "group_name": "Ввод поправок в eeprom",
                     "group_bytes": "55",
+                    "group_eeprom": ["53 08 14 50 50 00 00 10", "53 08 14 50 52 00 00 10"],
                     "elements": [
                         {
                             "element_name": "Значение крена",
@@ -696,7 +678,7 @@ def get_default_json_data():
                     ]
                 }
             ]
-        }
+        },
     ]
     return data
 
@@ -717,11 +699,6 @@ def get_json_schema():
                     "minLength": 6,
                     "maxLength": 6
                 },
-                "category_eeprom": {
-                    "type": "string",
-                    "minLength": 0,
-                    "maxLength": 23
-                },
                 "is_input": {
                     "type": "boolean",
                 },
@@ -738,6 +715,9 @@ def get_json_schema():
                                 "type": "string",
                                 "minLength": 2,
                                 "maxLength": 2
+                            },
+                            "group_eeprom": {
+                            "type": "array"
                             },
                             "elements": {
                                 "type": "array",

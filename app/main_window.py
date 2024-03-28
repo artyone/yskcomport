@@ -12,6 +12,7 @@ from PyQt5.QtWidgets import (QApplication, QComboBox, QHBoxLayout, QLabel,
 
 from .controller import AnswerException, Controller
 from .tab_widgets import TabWidget
+from time import sleep
 
 
 class MainWindow(QMainWindow):
@@ -169,6 +170,7 @@ class MainWindow(QMainWindow):
         byte_command = self.ctrl.get_apply_command(command)
         self.serial_port.write(byte_command)
         self.set_console_text(f'Команда записать отправлена: {command}')
+        sleep(0.05)
 
     def read_data(self):
         while self.serial_port.waitForReadyRead(100):

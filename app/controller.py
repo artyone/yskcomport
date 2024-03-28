@@ -21,10 +21,10 @@ class AnswerException(Exception):
 class ElementData:
     category_name: str
     category_bytes: str
-    category_eeprom: str
     is_input: bool
     group_name: str
     group_bytes: str
+    group_eeprom: str
     element_name: str
     element_bytes: str
     type: str
@@ -70,10 +70,10 @@ class Controller:
                         ElementData(
                             category['category_name'],
                             category['category_bytes'],
-                            category['category_eeprom'],
                             category['is_input'],
                             group['group_name'],
                             group['group_bytes'],
+                            group['group_eeprom'],
                             element['element_name'],
                             element['element_bytes'],
                             element['type'],
@@ -86,13 +86,13 @@ class Controller:
         return self._data
 
     def get_category_names(self):
-        return sorted({data.category_name for data in self._data})
+        return list({data.category_name: 0 for data in self._data})
 
     def get_group_datas(self, category_name):
         return [data for data in self._data if data.category_name == category_name]
 
     def get_group_names(self, category_name):
-        return sorted({data.group_name for data in self.get_group_datas(category_name)})
+        return list({data.group_name: 0 for data in self.get_group_datas(category_name)})
 
     def get_element_datas(self, category_name, group_name):
         return [data for data in self.get_group_datas(category_name) if data.group_name == group_name]
@@ -103,11 +103,11 @@ class Controller:
     def get_element_data(self, category_name, group_name, element_name):
         return [data for data in self.get_element_datas(category_name, group_name) if data.element_name == element_name][0]
     
-    def get_eeprom_command(self, category_name):
-        lst = self.get_group_datas(category_name)
+    def get_eeprom_command(self, category_name, group_name):
+        lst = self.get_element_datas(category_name, group_name)
         if len(lst):
-            return lst[0].category_eeprom
-        return ''
+            return lst[0].group_eeprom
+        return []
 
     # def set_new_fixed_bytes(self, new_bytes: str):
     #     try:
