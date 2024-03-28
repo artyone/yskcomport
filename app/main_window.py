@@ -35,7 +35,7 @@ class MainWindow(QMainWindow):
         self.restoreGeometry(geometry)
 
         self.app.setWindowIcon(QIcon('icon.ico'))
-        self.setWindowTitle('YSK, ver. 24.03.04')
+        self.setWindowTitle('YSK, ver. 24.03.28')
 
         self.serial_port = QSerialPort(self)
         self.serial_port.readyRead.connect(self.read_data)
