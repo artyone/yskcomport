@@ -191,6 +191,7 @@ class MainWindow(QMainWindow):
 
     def check_answer(self, answer):
         if len(answer) == 8:
+            self.buffer_answer = b''
             return answer
         self.buffer_answer += answer
         if len(self.buffer_answer) >= 8:
