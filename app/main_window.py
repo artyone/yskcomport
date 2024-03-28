@@ -134,7 +134,7 @@ class MainWindow(QMainWindow):
         self.main_layout.addWidget(self.progress_bar)
 
         self.block_all_elements(True)
-        self.timer.start(50)
+        self.timer.start(100)
 
     def send_next_command(self):
         if self.current_index >= len(self.commands):
