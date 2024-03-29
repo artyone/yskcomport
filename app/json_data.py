@@ -561,7 +561,7 @@ def get_default_json_data():
                 {
                     "group_name": "Ввод информации о ПМО",
                     "group_bytes": "53",
-                    "group_eeprom": ["53 08 14 50 50 00 00 0F", "53 08 14 50 51 00 00 10"],
+                    "group_eeprom": ["53 08 14 50 51 00 00 10", "53 08 14 50 50 00 00 0F"],
                     "elements": [
                         {
                             "element_name": "Версия ПМО",
@@ -652,7 +652,7 @@ def get_default_json_data():
                 {
                     "group_name": "Ввод поправок в eeprom",
                     "group_bytes": "55",
-                    "group_eeprom": ["53 08 14 50 50 00 00 0F", "53 08 14 50 52 00 00 11"],
+                    "group_eeprom": ["53 08 14 50 52 00 00 11", "53 08 14 50 50 00 00 0F"],
                     "elements": [
                         {
                             "element_name": "Значение крена",

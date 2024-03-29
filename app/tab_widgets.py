@@ -185,9 +185,8 @@ class GroupBox(QGroupBox):
         self.main_window.start_sending(data)
     
     def send_eeprom(self):
-        for command in self.eeprom_commands:
-            self.main_window.send_apply_command(command)
-            
+        self.main_window.start_sending(self.eeprom_commands, mode='eeprom')
+
     
     def block_buttons(self, value):
         if 'apply_button' in dir(self):
@@ -281,7 +280,7 @@ class DebugWidget(QWidget):
 
     def send_data(self):
         data = self.get_data_from_widgets()
-        self.main_window.start_sending([data], debug=True)
+        self.main_window.start_sending([data], mode='debug')
         
     def get_data_from_widgets(self):
         data = []
@@ -367,7 +366,7 @@ class DebugTabWidget(QWidget):
     
     def send_data(self):
         data = self.get_data_from_widgets()
-        self.main_window.start_sending(data, debug=True)
+        self.main_window.start_sending(data, mode='debug')
 
 class TabWidget(QTabWidget):
     def __init__(self, *args, ctrl: Controller, **kwargs):

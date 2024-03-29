@@ -244,6 +244,14 @@ class Controller:
         for val in data:
             commands.append(bytes([int(i, base=16) if i else 0 for i in val]))
         return commands
+    
+    @staticmethod
+    def get_commands_for_eeprom(data):
+        commands = []
+        for val in data:
+            commands.append(bytes([int(i, base=16) for i in val.split()]))
+        return commands
+
 
 
 if __name__ == '__main__':

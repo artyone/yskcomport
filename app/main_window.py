@@ -35,7 +35,7 @@ class MainWindow(QMainWindow):
         self.restoreGeometry(geometry)
 
         self.app.setWindowIcon(QIcon('icon.ico'))
-        self.setWindowTitle('YSK, ver. 24.03.28')
+        self.setWindowTitle('YSK, ver. 24.03.29')
 
         self.serial_port = QSerialPort(self)
         self.serial_port.readyRead.connect(self.read_data)
@@ -101,7 +101,7 @@ class MainWindow(QMainWindow):
         layout.addLayout(filter_layout)
 
         self.filter_combobox = QComboBox()
-        self.filter_combobox.addItems(['Нет', 'Не показывать 0F'])
+        self.filter_combobox.addItems(['Нет', 'Не показывать 0F', 'Полный режим'])
         filter_layout.addWidget(QLabel('Фильтр лога: '))
         filter_layout.addWidget(self.filter_combobox)
 
@@ -117,13 +117,15 @@ class MainWindow(QMainWindow):
     def clear_log(self):
         self.log_widget.clear()
 
-    def start_sending(self, widget_datas, debug=False):
+    def start_sending(self, widget_datas, mode=None):
         if not self.serial_port.isOpen():
             self.set_console_text('Необходимо открыть порт', 'error')
             return
 
-        if debug:
+        if mode == 'debug':
             self.commands = self.ctrl.get_commands_debug(widget_datas)
+        elif mode == 'eeprom':
+            self.commands = self.ctrl.get_commands_for_eeprom(widget_datas)
         else:
             self.commands = self.ctrl.get_data_for_temp_memory(widget_datas)
 
@@ -134,7 +136,7 @@ class MainWindow(QMainWindow):
         self.main_layout.addWidget(self.progress_bar)
 
         self.block_all_elements(True)
-        self.timer.start(100)
+        self.timer.start(250)
 
     def send_next_command(self):
         if self.current_index >= len(self.commands):
@@ -163,22 +165,10 @@ class MainWindow(QMainWindow):
             [command.hex().upper()[i:i+2] for i in range(0, len(command.hex()), 2)])
         return formatted_command
 
-    def send_apply_command(self, command):
-        if not self.serial_port.isOpen():
-            self.set_console_text('Необходимо открыть порт', 'error')
-            return
-        byte_command = self.ctrl.get_apply_command(command)
-        self.serial_port.write(byte_command)
-        self.set_console_text(f'Команда записать отправлена: {command}')
-        sleep(0.05)
 
     def read_data(self):
         while self.serial_port.waitForReadyRead(100):
             data = self.serial_port.readAll()
-            if self.filter_combobox.currentIndex() == 1 and data[0:4] == b'\x53\x08\x54\x0f':
-                continue
-            self.set_console_text(
-                f"Приняты данные: {self.command_byte_to_str(data.data())}")
             data = self.check_answer(data)
             if data is None:
                 continue
@@ -190,14 +180,24 @@ class MainWindow(QMainWindow):
             widget.update_data()
 
     def check_answer(self, answer):
-        if len(answer) == 8:
-            self.buffer_answer = b''
-            return answer
         self.buffer_answer += answer
-        if len(self.buffer_answer) >= 8:
-            result = self.buffer_answer[:8]
-            self.buffer_answer = self.buffer_answer[8:]
-            return result
+        if self.filter_combobox.currentIndex() == 2:
+            self.set_console_text(
+                    f"Приняты данные:        {self.command_byte_to_str(answer.data())}"
+                )
+        while len(self.buffer_answer) >= 8:
+            if self.buffer_answer[0:2] == b'\x53\x08':
+                if self.filter_combobox.currentIndex() == 1 and self.buffer_answer[2:4] == b'\x54\x0f':
+                    self.buffer_answer = self.buffer_answer[8:]
+                    continue
+                result = self.buffer_answer = self.buffer_answer[:8]
+                if self.filter_combobox.currentIndex() != 2:
+                    self.set_console_text(
+                        f"Приняты данные:        {self.command_byte_to_str(result.data())}"
+                    )
+                self.buffer_answer = self.buffer_answer[8:]
+                return result
+            self.buffer_answer = self.buffer_answer[1:]
         return None
 
     def restart_app(self) -> None:
@@ -249,7 +249,7 @@ class MainWindow(QMainWindow):
         self.tabs.block_buttons(True)
 
     def set_console_text(self, text: str, type='info'):
-        current_time = QTime.currentTime().toString("hh:mm:zzz")
+        current_time = QTime.currentTime().toString("hh:mm:ss:zzz")
         formatted_text = f"{current_time}: {text}\n"
         text_format = QTextCharFormat()
 
